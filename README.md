@@ -12,16 +12,16 @@
 
 root 디렉토리에서 다음 명령어 실행
 
-### 기타
-
-- 호환성, 커밋 diff 이슈로 인해 반드시 파일 마지막은 개행
-    - VSCODE endline 자동 개행 설정 방법: setting.json에서 `"files.insertFinalNewline": true` 추가 (거의 대부분 프로젝트에서 이렇게 하니까 User에서 설정해도 상관 없음)
-
 ```
 $ git config commit.template .gitmessage.txt
 ```
 
 설정 후 `git commit -m` 말고 `git commit` 명령어로 커밋 할 때 확인 가능
+
+### 기타
+
+- 호환성, 커밋 diff 이슈로 인해 반드시 파일 마지막은 개행
+    - VSCODE endline 자동 개행 설정 방법: setting.json에서 `"files.insertFinalNewline": true` 추가 (거의 대부분 프로젝트에서 이렇게 하니까 User에서 설정해도 상관 없음)
 
 ## client 설정
 
