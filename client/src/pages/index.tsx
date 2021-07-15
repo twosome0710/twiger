@@ -13,10 +13,10 @@ const IndexPage = () => (
         <p className={styles.main_phrase}>지금 일어나고 있는 일</p>
         <p className={styles.signup_phrase}>오늘 트위저에 가입하세요.</p>
         <div className={styles.link_wrap}>
-          <Link href="#">
+          <Link href="/signup">
             <a className={styles.signup_link}>가입하기</a>
           </Link>
-          <Link href="#">
+          <Link href="/login">
             <a className={styles.signin_link}>로그인</a>
           </Link>
         </div>
