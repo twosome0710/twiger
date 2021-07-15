@@ -226,4 +226,7 @@ cython_debug/
 pyvenv.cfg
 pip-selfcheck.json
 
+# Secret files
+secrets.json
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,python,django,virtualenv
