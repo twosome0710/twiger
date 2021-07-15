@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os, json
+from django.core.exceptions import ImproperlyConfigured
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,9 +22,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nw)x+%axjfnu*pizpip^kqig@+gmbk7+@#!zza9gwjn36(3cy4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
+
+
+with open(secret_file) as f:
+    key = json.loads(f.read())
+
+def get_key(setting, key=key):
+    try:
+        return key[setting]
+    except KeyError:
+        error_msg = "set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+SECRET_KEY = get_key("SECRET_KEY")
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -37,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +96,7 @@ DATABASES = {
             'NAME': 'twigerDB',
             'ENFORCE_SCHEMA': False,
             'CLIENT': {
-                'host': 'mongodb+srv://jihyeok:jjh8493@twigerdb.oyqtu.mongodb.net/twigerDB?retryWrites=true&w=majority'
+                'host': 'mongodb+srv://'+get_key("MongoDB_UserName")+':'+get_key("MongoDB_PWD")+'@twigerdb.oyqtu.mongodb.net/'+get_key("MongoDB_DBName")+'?retryWrites=true&w=majority'
             }  
         }
 }
@@ -108,9 +124,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
