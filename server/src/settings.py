@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 
 # SECURITY WARNING: don't run with debug turned on in production!
-secret_file = os.path.join(BASE_DIR, 'secrets.json')
+secret_file = os.path.join(BASE_DIR, 'json/secrets.json')
 
 
 with open(secret_file) as f:
