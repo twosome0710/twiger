@@ -5,6 +5,7 @@
 ## 빌드 버전
 
 - node: v14.17.3, npm: v6.14.13
+- python: v3.8.2
 
 ## 프로젝트 설정
 
@@ -12,7 +13,7 @@
 
 root 디렉토리에서 다음 명령어 실행
 
-```
+```{.bash}
 $ git config commit.template .gitmessage.txt
 ```
 
@@ -29,8 +30,9 @@ $ git config commit.template .gitmessage.txt
 
 1. 라이브러리 설치
 
-```
-npm install
+```{.bash}
+$ cd client
+$ npm install
 ```
 
 ### 실행 가능 명령어
@@ -65,11 +67,11 @@ client/
 
 파일 저장시 linting & foramtting을 자동으로 해주려면 vscode 내에서 다음 설정을 추가
 
-1. prettier 확장 설치
+1. **prettier** 확장 설치
 2. 환경 설정에서 User 또는 Workspace에서 settings.json 열기 (User에서 설정하면 전체 에디터에 영향을 주기 때문에 Workspace에서 하길 추천)
 3. 다음 설정이 없으면 추가
 
-```
+```{.json}
 // Set the default
 "editor.formatOnSave": false,
 // Enable per-language
@@ -94,3 +96,74 @@ client/
     "editor.formatOnSave": true
 }
 ```
+
+## server 설정
+
+### HOW TO DO
+
+로컬 환경에 파이썬이 우선 설치되어 있다고 가정하고 진행한다.
+
+1. 가상 환경 설정
+
+virtualenv로 가상환경 설정을 한다.
+
+```{.bash}
+$ pip install virtualenv
+$ pip3 install virtualenv     // python2가 설치된 경우 
+```
+
+```{.bash}
+$ cd server
+$ virtualenv venv --python=python3.8.2
+$ source venv/bin/activate
+```
+
+2. 라이브러리 설치
+
+```{.bash}
+$ pip install -r requirements.txt
+```
+
+3. 서버 실행
+
+```{.bash}
+$ python manage.py runserver
+```
+
+### Python 코드 스타일, linting 설정
+
+VSCODE 기준으로 설정한다. formatter로는 black, linter로 pylint를 사용한다. formatter와 linter를 설정하고 파일이 저장될 때 해당 스타일과 문법 체크를 하고 자동으로 맞는 포맷으로 변환해준다.
+
+1. black, pylint를 가상환경에 설치한다. requirement.txt에 있으므로 이미 설치되어 있으면 넘어간다. (가상환경이 활성화된 상태로 가정한다.)
+
+```{.bash}
+$ pip install -r requirements.txt
+```
+
+3. VSCODE 확장 **Python**, **Python for VSCode**, **Python Extension Pack**을 설치한다.
+
+
+
+2. VSCODE의 workspace 설정(settings.json)에 다음 설정을 추가한다.
+
+```{.json}
+{
+    "python.formatting.provider": "black",
+        "[python]": {
+            "editor.formatOnSave": true
+    },
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true,
+    "python.linting.lintOnSave": true,
+}
+```
+
+3. 다음 코드로 확인해본다.
+
+```{.python}
+def very_important_function(template: str, *variables, file: os.PathLike, engine: str, header: bool = True, debug: bool = False):
+    """Applies `variables` to the `template` and writes to `file`."""
+    with open(file, 'w') as f:
+        ...
+```
+
