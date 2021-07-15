@@ -1,0 +1,83 @@
+@charset "utf-8";
+
+.container {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100vw;
+    height: 100vh;
+}
+
+.background_area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 32px;
+    background: #1da1f2 url(https://abs.twimg.com/sticky/illustrations/lohp_1302x955.png) no-repeat 50% 50%;
+    background-size: auto 100%;
+}
+
+.content_area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 45vw;
+    padding: 36px;
+}
+
+.content_area .main_phrase {
+    margin: 64px 0;
+    font-size: 6.4rem;
+    font-weight: 700;
+    line-height: 8.4rem;
+}
+
+.content_area .signup_phrase {
+    font-size: 3.1rem;
+    font-weight: 700;
+    line-height: 3.6rem;
+}
+
+.content_area .link_wrap {
+    margin-top: 32px;
+}
+
+.content_area .link_wrap .signup_link {
+    display: block;
+    max-width: 320px;
+    min-width: 48px;
+    height: 46px;
+    border-radius: 24px;
+    background-color: #1da1f2;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 46px;
+    text-align: center;
+}
+
+.content_area .link_wrap .signup_link:hover {
+    text-decoration: none;
+    background-color: #1a91da;
+}
+
+.content_area .link_wrap .signin_link {
+    display: block;
+    max-width: 320px;
+    min-width: 48px;
+    height: 46px;
+    margin-top: 20px;
+    border: 1px solid #1da1f2;
+    border-radius: 24px;
+    background-color: #fff;
+    color: #1da1f2;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 46px;
+    text-align: center;
+}
+
+.content_area .link_wrap .signin_link:hover {
+    text-decoration: none;
+    background-color: rgba(29, 161, 242, 0.1);
+}
