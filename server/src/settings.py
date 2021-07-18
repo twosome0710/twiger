@@ -14,6 +14,7 @@ from pathlib import Path
 import os, json
 from django.core.exceptions import ImproperlyConfigured
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -149,7 +150,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000"  
+    get_key('Client_Resource')  
 ]
 
 APPEND_SLASH = False

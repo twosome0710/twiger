@@ -16,6 +16,7 @@ conn = MongoClient('mongodb+srv://'+get_key("MongoDB_UserName")+':'+get_key("Mon
 db = conn.get_database(get_key("MongoDB_DBName"))
 collection = db.twigerDB.User
 
+print('conn: ', conn)
 
 @api_view(['GET'])
 def apiOverview(request):
@@ -38,11 +39,4 @@ def signUp(request):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-
-
-	   
-
-
-
+        
