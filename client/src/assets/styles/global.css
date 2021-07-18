@@ -18,12 +18,16 @@ legend {
     padding: 0;
 }
 
+html {
+    font-size: 10px;
+}
+
 body,
 input,
 textarea,
 select,
 button {
-    font-size: 14px;
+    font-size: 1.4rem;
     font-family: Dotum, '돋움', Helvetica, 'Apple SD Gothic Neo', sans-serif;
 }
 
