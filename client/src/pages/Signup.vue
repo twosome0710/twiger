@@ -1,9 +1,14 @@
 <template>
-  <h1>회원가입</h1>
+  <SignupModal />
 </template>
 
 <script>
+import SignupModal from "../components/SignupModal";
+
 export default {
   name: "Signup",
+  components: {
+    SignupModal,
+  },
 };
 </script>
