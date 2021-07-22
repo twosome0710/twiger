@@ -28,7 +28,7 @@ textarea,
 select,
 button {
     font-size: 1.4rem;
-    font-family: Dotum, '돋움', Helvetica, 'Apple SD Gothic Neo', sans-serif;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 }
 
 ul,

@@ -6,7 +6,6 @@
           src="../assets/images/logo_blue.png"
           alt="트위저 로고"
           width="45"
-          height="45"
           class="logo"
         />
       </div>
