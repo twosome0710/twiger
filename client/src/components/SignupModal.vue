@@ -1,12 +1,5 @@
 <template>
-  <div
-    class="signup_modal_overlay"
-    @click="
-      clickYearHandler($event);
-      clickMonthHandler($event);
-      clickDayHandler($event);
-    "
-  >
+  <div class="signup_modal_overlay">
     <div class="signup_modal">
       <form action="post">
         <div class="signup_form">
@@ -56,81 +49,18 @@
                 이 정보는 공개적으로 표시되지 않습니다. 비즈니수, 반려동물 등
                 계정 주제에 상관 없이 나의 연령을 확인하세요.
               </p>
-              <div class="birth_box">
-                <div class="year">
-                  <label
-                    class="label_year"
-                    :class="{
-                      selected: year.selected,
-                      error: year.error,
-                    }"
-                  >
-                    <div class="text_wrap">
-                      <span class="text">년(4자리)</span>
-                    </div>
-                    <div class="input_wrap">
-                      <input
-                        type="text"
-                        id="year"
-                        class="input_year"
-                        maxlength="4"
-                        v-model="year.value"
-                        @focus="year.selected = true"
-                        @blur="year.selected = false"
-                        @input="inputYearHandler"
-                      />
-                    </div>
-                  </label>
-                </div>
-                <div class="month">
-                  <label
-                    for="month"
-                    class="label_month"
-                    v-bind:class="{
-                      selected: month.selected,
-                      error: month.error,
-                    }"
-                  >
-                    <div class="text_wrap">
-                      <span class="text">월</span>
-                    </div>
-                    <div class="input_wrap">
-                      <input
-                        type="text"
-                        id="month"
-                        class="input_month"
-                        maxlength="2"
-                        v-model="month.value"
-                        @focus="month.selected = true"
-                        @blur="month.selected = false"
-                        @input="inputMonthHandler"
-                      />
-                    </div>
-                  </label>
-                </div>
-                <div class="day">
-                  <label
-                    class="label_day"
-                    v-bind:class="{ selected: day.selected, error: day.error }"
-                  >
-                    <div class="text_wrap">
-                      <span class="text">일</span>
-                    </div>
-                    <div class="input_wrap">
-                      <input
-                        type="text"
-                        id="day"
-                        class="input_day"
-                        maxlength="2"
-                        v-model="day.value"
-                        @focus="day.selected = true"
-                        @blur="day.selected = false"
-                        @input="inputDayHandler"
-                      />
-                    </div>
-                  </label>
-                </div>
-              </div>
+              <InputBirth
+                class="input_birth"
+                :year="year"
+                :month="month"
+                :day="day"
+                :isYearError="isYearError"
+                :isMonthError="isMonthError"
+                :isDayError="isDayError"
+                :inputYearHandler="inputYearHandler"
+                :inputMonthHandler="inputMonthHandler"
+                :inputDayHandler="inputDayHandler"
+              />
             </div>
           </div>
           <button
@@ -150,6 +80,7 @@
 <script>
 import router from "../router";
 import Input from "./Input.vue";
+import InputBirth from "./InputBirth.vue";
 
 function inputNameHandler(event) {
   event.preventDefault();
@@ -166,64 +97,19 @@ function inputPasswordHandler(event) {
   this.password = event.target.value;
 }
 
-function clickYearHandler(event) {
-  event.preventDefault();
-  const labelYear = event.target.closest(".label_year");
-  if (labelYear) {
-    labelYear.querySelector(".input_year").focus();
-  }
-}
-
 function inputYearHandler(event) {
   event.preventDefault();
-  const re = /\d{4}/;
-  if (this.year.value.length > 0 && !re.test(this.year.value)) {
-    this.year.correct = false;
-    this.year.error = true;
-  } else {
-    this.year.correct = true;
-    this.year.error = false;
-  }
-}
-
-function clickMonthHandler(event) {
-  event.preventDefault();
-  const labelMonth = event.target.closest(".label_month");
-  if (labelMonth) {
-    labelMonth.querySelector(".input_month").focus();
-  }
+  this.year = event.target.value;
 }
 
 function inputMonthHandler(event) {
   event.preventDefault();
-  const re = /^(0?[1-9]|1[0-2])$/;
-  if (this.month.value.length > 0 && !re.test(this.month.value)) {
-    this.month.correct = false;
-    this.month.error = true;
-  } else {
-    this.month.correct = true;
-    this.month.error = false;
-  }
-}
-
-function clickDayHandler(event) {
-  event.preventDefault();
-  const labelDay = event.target.closest(".label_day");
-  if (labelDay) {
-    labelDay.querySelector(".input_day").focus();
-  }
+  this.month = event.target.value;
 }
 
 function inputDayHandler(event) {
   event.preventDefault();
-  const re = /^(0?[1-9]|[12][0-9]|3[01])$/;
-  if (this.day.value.length > 0 && !re.test(this.day.value)) {
-    this.day.correct = false;
-    this.day.error = true;
-  } else {
-    this.day.correct = true;
-    this.day.error = false;
-  }
+  this.day = event.target.value;
 }
 
 async function submitHandler(event) {
@@ -235,6 +121,7 @@ async function submitHandler(event) {
     password: this.password,
     birth: this.birth,
   };
+  // console.log(data);
   const response = await fetch(uri, {
     method: "post",
     mode: "cors",
@@ -251,30 +138,16 @@ export default {
   name: "SignupModal",
   components: {
     Input,
+    InputBirth,
   },
   data: function () {
     return {
       name: "",
       email: "",
       password: "",
-      year: {
-        value: "",
-        selected: false,
-        correct: true,
-        error: false,
-      },
-      month: {
-        value: "",
-        selected: false,
-        correct: true,
-        error: false,
-      },
-      day: {
-        value: "",
-        selected: false,
-        correct: true,
-        error: false,
-      },
+      year: "",
+      month: "",
+      day: "",
     };
   },
   computed: {
@@ -294,21 +167,33 @@ export default {
     isPasswordCorrect() {
       return 0 < this.password.length && this.password.length <= 50;
     },
+    isYearError() {
+      const re = /\d{4}/;
+      return this.year.length > 0 && !re.test(this.year);
+    },
+    isMonthError() {
+      const re = /^(0?[1-9]|1[0-2])$/;
+      return this.month.length > 0 && !re.test(this.month);
+    },
+    isDayError() {
+      const re = /^(0?[1-9]|[12][0-9]|3[01])$/;
+      return this.day.length > 0 && !re.test(this.day);
+    },
     isFormCompleted() {
       return (
         this.isNameCorrect &&
         this.isEmailCorrect &&
         this.isPasswordCorrect &&
-        this.year.correct &&
-        this.month.correct &&
-        this.day.correct
+        !this.isYearError &&
+        !this.isMonthError &&
+        !this.isDayError
       );
     },
     birth() {
-      if (this.year.value && this.month.value && this.day.value) {
-        const zeroPadMonth = this.month.value.padStart(2, "0");
-        const zeroPadDay = this.day.value.padStart(2, "0");
-        return `${this.year.value}-${zeroPadMonth}-${zeroPadDay}`;
+      if (this.year && this.month && this.day) {
+        const zeroPadMonth = this.month.padStart(2, "0");
+        const zeroPadDay = this.day.padStart(2, "0");
+        return `${this.year}-${zeroPadMonth}-${zeroPadDay}`;
       }
       return null;
     },
@@ -317,11 +202,8 @@ export default {
     inputNameHandler,
     inputEmailHandler,
     inputPasswordHandler,
-    clickYearHandler,
     inputYearHandler,
-    clickMonthHandler,
     inputMonthHandler,
-    clickDayHandler,
     inputDayHandler,
     submitHandler,
   },
@@ -396,385 +278,8 @@ export default {
   line-height: 2rem;
 }
 
-.signup_modal .signup_form .input_area .birth_wrap .birth_box {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
+.signup_modal .signup_form .input_area .birth_wrap .input_birth {
   margin-top: 16px;
-}
-
-.signup_modal .signup_form .input_area .birth_wrap .birth_box .year {
-  display: table-cell;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year {
-  display: block;
-  position: relative;
-  border: 1px solid #cfd9de;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year.selected {
-  border-color: #1da1f2;
-  box-shadow: #1da1f2 0 0 0 1px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year.error {
-  border-color: #e0245e;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year.selected.error {
-  border-color: #e0245e;
-  box-shadow: #e0245e 0 0 0 1px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year
-  .text_wrap {
-  position: absolute;
-  padding: 8px 8px 0;
-  color: #536471;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year.selected
-  .text_wrap {
-  color: #1da1f2;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year.error
-  .text_wrap {
-  color: #e0245e;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year
-  .input_wrap {
-  margin-top: 16px;
-  padding: 12px 8px 8px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year
-  .input_wrap
-  .input_year {
-  display: block;
-  width: 100%;
-  border: 0;
-  box-sizing: border-box;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .year
-  .label_year
-  .input_wrap
-  .input_year:focus {
-  outline: none;
-}
-
-.signup_modal .signup_form .input_area .birth_wrap .birth_box .month {
-  display: table-cell;
-  padding-left: 12px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month {
-  display: block;
-  position: relative;
-  border: 1px solid #cfd9de;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month.selected {
-  border-color: #1da1f2;
-  box-shadow: #1da1f2 0 0 0 1px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month.error {
-  border-color: #e0245e;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month.selected.error {
-  border-color: #e0245e;
-  box-shadow: #e0245e 0 0 0 1px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month
-  .text_wrap {
-  position: absolute;
-  padding: 8px 8px 0;
-  color: #536471;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month.selected
-  .text_wrap {
-  color: #1da1f2;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month.error
-  .text_wrap {
-  color: #e0245e;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month
-  .input_wrap {
-  margin-top: 16px;
-  padding: 12px 8px 8px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month
-  .input_wrap
-  .input_month {
-  display: block;
-  width: 100%;
-  border: 0;
-  box-sizing: border-box;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .month
-  .label_month
-  .input_wrap
-  .input_month:focus {
-  outline: none;
-}
-
-.signup_modal .signup_form .input_area .birth_wrap .birth_box .day {
-  display: table-cell;
-  padding-left: 12px;
-}
-
-.signup_modal .signup_form .input_area .birth_wrap .birth_box .day .label_day {
-  display: block;
-  position: relative;
-  border: 1px solid #cfd9de;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day.selected {
-  border-color: #1da1f2;
-  box-shadow: #1da1f2 0 0 0 1px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day.error {
-  border-color: #e0245e;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day.selected.error {
-  border-color: #e0245e;
-  box-shadow: #e0245e 0 0 0 1px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day
-  .text_wrap {
-  position: absolute;
-  padding: 8px 8px 0;
-  color: #536471;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day.selected
-  .text_wrap {
-  color: #1da1f2;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day.error
-  .text_wrap {
-  color: #e0245e;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day
-  .input_wrap {
-  margin-top: 16px;
-  padding: 12px 8px 8px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day
-  .input_wrap
-  .input_day {
-  display: block;
-  width: 100%;
-  border: 0;
-  box-sizing: border-box;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .birth_wrap
-  .birth_box
-  .day
-  .label_day
-  .input_wrap
-  .input_day:focus {
-  outline: none;
 }
 
 .signup_modal .signup_form .btn_submit {
