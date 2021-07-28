@@ -35,67 +35,91 @@ $ cd client
 $ npm install
 ```
 
-### 실행 가능 명령어
-    - `npm run dev`: 개발용 서버(localhost:3000) 실행. 소스코드 수정시 자동으로 리로딩.
-    - `npm start`: 빌드된 정적 파일로 서버 실행.
-    - `npm run build`: 배포용 정적 파일 빌드.
-    - `npm run lint`: linting, formatting 체크.
-    - `npm run lint:fix`: linting, formatting 후 자동 수정.
+2. dev server 실행(8080포트)
 
-### 현황
-    - next.js, typescript, eslint(문법 체크), prettier(코드 포맷팅) 설정
+```{.bash}
+$ npm run serve
+```
+
+3. 배포용 빌드
+
+```{.bash}
+$ npm run build
+```
+
+4. lint 실행
+
+```{.bash}
+$ npm run lint
+```
 
 ### 디렉토리
 
 ```
 client/
-    - src/ // 모든 소스코드는 src/ 하위에서 작업
-        - components/ // UI들을 컴포넌트화해서 pages에서 import해서 사용
-        - interfaces/ // typescript 관련 type이나 interface 관리
-        - pages/ // 만들어질 웹 페이지
-        - utils/ // 유틸
-    - .eslintrc // eslint 관련 설정
-    - .prettierrc // prettier 관련 설정
-    - tsconfig.json // typescript 관련 설정
-    - next-env.d.ts // next.js 관련 타입
-    - package.json // 설치한 라이브러리나 실행 스크립트 관련 목록
-    - package-lock.json // 설치된 라이브러리에 따라 자동 생성 (건들이지 말 것)
-    - .gitignore // client 디렉토리 하위에만 유효한 .gitignore (최상위의 .gitignore은 OS니 에디터 관련만 따로 설정해서 다름)
+    - src/
+        - assets/
+            - styles/
+            - images/
+        - components/
+        - router/
+        - views/
+        - main.js
+    - public/
+    - babel.config.js
+    - package.json, package-lock.json
+    - jsconfig.json
+    - .browserslistrc
+    - .eslintrc.js
+    - .gitignore
 ```
+
+- `src`: 작업한 소스코드 관리 디렉토리
+    - `assets`: 정적 파일 관리 (이미지, CSS 등)
+    - `components`: 여러 views에서 공통으로 재사용되는 컴포넌트 관리
+    - `router`: 페이지 전환되는데 필요한 코드 정의
+    - `views`: 페이지 관련 코드
+    - `main.js`: 빌드 시작점
+    - `babel.config.js`: Babel 설정
+    - `package.json`, `package-lock.json`: 라이브러리 목록
+    - `jsconfig.json`: vetur 확장에 필요한 설정 파일
+    - `.browserlistrc`: transpiling할 때 지원할 브라우저 범위 정의
+    - `.eslintrc.js`: Eslint 관련 설정 파일
+    - `.gitignore`: client 디렉토리에 해당되는 별도의 `.gitignore`
 
 ### linting & formatting 관련 추가 설정
 
 파일 저장시 linting & foramtting을 자동으로 해주려면 vscode 내에서 다음 설정을 추가
 
-1. **prettier** 확장 설치
-2. 환경 설정에서 User 또는 Workspace에서 settings.json 열기 (User에서 설정하면 전체 에디터에 영향을 주기 때문에 Workspace에서 하길 추천)
-3. 다음 설정이 없으면 추가
+1. **prettier**, **eslint**, **vetur** 확장 설치
+2. 취향에 맞게 User 또는 Workspace에 다음 코드 추가. User에 추가하면 Vscode 전체 설정. Worksapce에 추가하면 현재 프로젝트에만 적용.
 
 ```{.json}
-// Set the default
-"editor.formatOnSave": false,
-// Enable per-language
-"[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-},
-"[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-},
-"[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-},
-"[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-},
-"[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+{
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.tabSize": 2
+    }
+    "eslint.workingDirectories": [
+        { "mode": "auto" }
+    ],
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.alwaysShowStatus": true    // Vscode 하단 상태바에 eslint 확장 항시 표시용. 필요없으면 추가 안 해도 됨
 }
 ```
+
+3. 프로젝트 root의 `vetur.config.js`와 `client/jsconfig.json`는 **vetur** 확장의 최신 버전(v0.34.1)에서 한 레포지토리에 여러 프로젝트가 있을 때 설정을 잡지 못하는 문제 때문에 추가.
+
+### 기타
+
+- `@`는 `src` 디렉토리를 의미한다.
 
 ## server 설정
 
@@ -140,11 +164,9 @@ VSCODE 기준으로 설정한다. formatter로는 black, linter로 pylint를 사
 $ pip install -r requirements.txt
 ```
 
-3. VSCODE 확장 **Python**, **Python for VSCode**, **Python Extension Pack**을 설치한다.
+2. VSCODE 확장 **Python**, **Python for VSCode**, **Python Extension Pack**을 설치한다.
 
-
-
-2. VSCODE의 workspace 설정(settings.json)에 다음 설정을 추가한다.
+3. VSCODE의 workspace 설정(settings.json)에 다음 설정을 추가한다.
 
 ```{.json}
 {
@@ -158,7 +180,7 @@ $ pip install -r requirements.txt
 }
 ```
 
-3. 다음 코드로 확인해본다.
+4. 다음 코드로 확인해본다.
 
 ```{.python}
 def very_important_function(template: str, *variables, file: os.PathLike, engine: str, header: bool = True, debug: bool = False):
