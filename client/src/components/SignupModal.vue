@@ -2,12 +2,9 @@
   <div
     class="signup_modal_overlay"
     @click="
-      clickNameHandler($event);
-      clickEmailHandler($event);
       clickYearHandler($event);
       clickMonthHandler($event);
       clickDayHandler($event);
-      clickPasswordHandler($event);
     "
   >
     <div class="signup_modal">
@@ -23,77 +20,36 @@
           </div>
           <div class="input_area">
             <strong class="signup_guide_text">계정을 생성하세요</strong>
-            <label
-              class="label_name"
-              :class="{
-                selected: name.selected,
-                correct: name.correct,
-                error: name.error,
-              }"
-            >
-              <div class="text_wrap">
-                <span class="text">이름</span>
-              </div>
-              <div class="input_wrap">
-                <input
-                  type="text"
-                  class="input_name"
-                  maxlength="50"
-                  required
-                  autofocus
-                  v-model="name.value"
-                  @focus="name.selected = true"
-                  @blur="name.selected = false"
-                  @input="inputNameHandler"
-                />
-              </div>
-            </label>
-            <label
-              class="label_email"
-              :class="{
-                selected: email.selected,
-                correct: email.correct,
-                error: email.error,
-              }"
-            >
-              <div class="text_wrap">
-                <span class="text">이메일</span>
-              </div>
-              <div class="input_wrap">
-                <input
-                  type="email"
-                  class="input_email"
-                  required
-                  v-model="email.value"
-                  @focus="email.selected = true"
-                  @blur="email.selected = false"
-                  @input="inputEmailHandler"
-                />
-              </div>
-            </label>
-            <label
-              class="label_password"
-              :class="{
-                selected: password.selected,
-                correct: password.correct,
-                error: password.error,
-              }"
-            >
-              <div class="text_wrap">
-                <span class="text">패스워드</span>
-              </div>
-              <div class="input_wrap">
-                <input
-                  type="password"
-                  class="input_password"
-                  required
-                  v-model="password.value"
-                  @focus="password.selected = true"
-                  @blur="password.selected = false"
-                  @input="inputPasswordHandler"
-                />
-              </div>
-            </label>
+            <Input
+              type="text"
+              class="input_name"
+              label-name="이름 (필수)"
+              :max-length="50"
+              :required="true"
+              :autofocus="true"
+              :value="name"
+              :correct="isNameCorrect"
+              :inputHandler="inputNameHandler"
+            />
+            <Input
+              type="email"
+              class="input_email"
+              label-name="이메일 (필수)"
+              :required="true"
+              :value="email"
+              :correct="isEmailCorrect"
+              :error="isEmailError"
+              :inputHandler="inputEmailHandler"
+            />
+            <Input
+              type="password"
+              class="input_password"
+              label-name="패스워드 (필수)"
+              :required="true"
+              :value="password"
+              :correct="isPasswordCorrect"
+              :inputHandler="inputPasswordHandler"
+            />
             <div class="birth_wrap">
               <strong class="label_birth">생년월일</strong>
               <p class="info">
@@ -193,67 +149,21 @@
 
 <script>
 import router from "../router";
-
-function clickNameHandler(event) {
-  event.preventDefault();
-  const labelName = event.target.closest(".label_name");
-  if (labelName) {
-    labelName.querySelector(".input_name").focus();
-    this.isNameSelected = true;
-  } else {
-    this.isNameSelected = false;
-  }
-}
+import Input from "./Input.vue";
 
 function inputNameHandler(event) {
   event.preventDefault();
-  if (0 < this.name.value.length && this.name.value.length <= 50) {
-    this.name.correct = true;
-  } else {
-    this.name.correct = false;
-  }
-}
-
-function clickEmailHandler(event) {
-  event.preventDefault();
-  const labelEmail = event.target.closest(".label_email");
-  if (labelEmail) {
-    labelEmail.querySelector(".input_email").focus();
-  }
+  this.name = event.target.value;
 }
 
 function inputEmailHandler(event) {
   event.preventDefault();
-  const re =
-    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-  if (0 < this.email.value.length && re.test(this.email.value)) {
-    this.email.correct = true;
-    this.email.error = false;
-  } else if (!re.test(this.email.value)) {
-    this.email.correct = false;
-    this.email.error = true;
-  } else {
-    this.email.correct = false;
-    this.email.error = false;
-  }
-}
-
-function clickPasswordHandler(event) {
-  event.preventDefault();
-  const labelPassword = event.target.closest(".label_password");
-  if (labelPassword) {
-    labelPassword.querySelector(".input_password").focus();
-  }
+  this.email = event.target.value;
 }
 
 function inputPasswordHandler(event) {
   event.preventDefault();
-  if (0 < this.password.value.length && this.password.value.length <= 50) {
-    this.password.correct = true;
-    this.password.error = false;
-  } else {
-    this.password.correct = false;
-  }
+  this.password = event.target.value;
 }
 
 function clickYearHandler(event) {
@@ -320,8 +230,9 @@ async function submitHandler(event) {
   event.preventDefault();
   const uri = `${process.env.VUE_APP_API_URI}/users`;
   const data = {
-    name: this.name.value,
-    email: this.email.value,
+    name: this.name,
+    email: this.email,
+    password: this.password,
     birth: this.birth,
   };
   const response = await fetch(uri, {
@@ -338,26 +249,14 @@ async function submitHandler(event) {
 
 export default {
   name: "SignupModal",
+  components: {
+    Input,
+  },
   data: function () {
     return {
-      name: {
-        value: "",
-        selected: true,
-        correct: false,
-        error: false,
-      },
-      email: {
-        value: "",
-        selected: false,
-        correct: false,
-        error: false,
-      },
-      password: {
-        value: "",
-        selected: false,
-        correct: false,
-        error: false,
-      },
+      name: "",
+      email: "",
+      password: "",
       year: {
         value: "",
         selected: false,
@@ -379,11 +278,27 @@ export default {
     };
   },
   computed: {
+    isNameCorrect() {
+      return 0 < this.name.length && this.name.length <= 50;
+    },
+    isEmailCorrect() {
+      const re =
+        /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+      return this.email.length > 0 && re.test(this.email);
+    },
+    isEmailError() {
+      const re =
+        /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+      return this.email.length > 0 && !re.test(this.email);
+    },
+    isPasswordCorrect() {
+      return 0 < this.password.length && this.password.length <= 50;
+    },
     isFormCompleted() {
       return (
-        this.name.correct &&
-        this.email.correct &&
-        this.password.correct &&
+        this.isNameCorrect &&
+        this.isEmailCorrect &&
+        this.isPasswordCorrect &&
         this.year.correct &&
         this.month.correct &&
         this.day.correct
@@ -399,11 +314,8 @@ export default {
     },
   },
   methods: {
-    clickNameHandler,
     inputNameHandler,
-    clickEmailHandler,
     inputEmailHandler,
-    clickPasswordHandler,
     inputPasswordHandler,
     clickYearHandler,
     inputYearHandler,
@@ -455,220 +367,16 @@ export default {
   margin-top: 16px;
 }
 
-.signup_modal .signup_form .input_area .label_name {
-  display: block;
-  position: relative;
+.signup_modal .signup_form .input_area .input_name {
   margin-top: 28px;
-  border: 1px solid #cfd9de;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-.signup_modal .signup_form .input_area .label_name.selected {
-  border-color: #1da1f2;
-  box-shadow: #1da1f2 0 0 0 1px;
-}
-
-.signup_modal .signup_form .input_area .label_name.error {
-  border-color: #e0245e;
-}
-
-.signup_modal .signup_form .input_area .label_name.selected.error {
-  border-color: #e0245e;
-  box-shadow: #e0245e 0 0 0 1px;
-}
-
-.signup_modal .signup_form .input_area .label_name .text_wrap {
-  position: absolute;
-  padding: 16px 8px 0;
-  color: #536471;
-  font-size: 1.7rem;
-  line-height: 2.4rem;
-}
-
-.signup_modal .signup_form .input_area .label_name.selected .text_wrap {
-  padding-top: 8px;
-  color: #1da1f2;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal .signup_form .input_area .label_name.correct .text_wrap {
-  padding-top: 8px;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal .signup_form .input_area .label_name.selected.error .text_wrap {
-  color: #e0245e;
-}
-
-.signup_modal .signup_form .input_area .label_name .input_wrap {
-  margin-top: 16px;
-  padding: 12px 8px 8px;
-}
-
-.signup_modal .signup_form .input_area .label_name .input_wrap .input_name {
-  display: block;
-  width: 100%;
-  border: 0;
-  box-sizing: border-box;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .label_name
-  .input_wrap
-  .input_name:focus {
-  outline: none;
-}
-
-.signup_modal .signup_form .input_area .label_email {
-  display: block;
-  position: relative;
+.signup_modal .signup_form .input_area .input_email {
   margin-top: 28px;
-  border: 1px solid #cfd9de;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
-.signup_modal .signup_form .input_area .label_email.selected {
-  border-color: #1da1f2;
-  box-shadow: #1da1f2 0 0 0 1px;
-}
-
-.signup_modal .signup_form .input_area .label_email.error {
-  border-color: #e0245e;
-}
-
-.signup_modal .signup_form .input_area .label_email.selected.error {
-  border-color: #e0245e;
-  box-shadow: #e0245e 0 0 0 1px;
-}
-
-.signup_modal .signup_form .input_area .label_email .text_wrap {
-  position: absolute;
-  padding: 16px 8px 0;
-  color: #536471;
-  font-size: 1.7rem;
-  line-height: 2.4rem;
-}
-
-.signup_modal .signup_form .input_area .label_email.selected .text_wrap {
-  padding-top: 8px;
-  color: #1da1f2;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal .signup_form .input_area .label_email.correct .text_wrap {
-  padding-top: 8px;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal .signup_form .input_area .label_email.selected.error .text_wrap {
-  color: #e0245e;
-}
-
-.signup_modal .signup_form .input_area .label_email .input_wrap {
-  margin-top: 16px;
-  padding: 12px 8px 8px;
-}
-
-.signup_modal .signup_form .input_area .label_email .input_wrap .input_email {
-  display: block;
-  width: 100%;
-  border: 0;
-  box-sizing: border-box;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .label_email
-  .input_wrap
-  .input_email:focus {
-  outline: none;
-}
-
-.signup_modal .signup_form .input_area .label_password {
-  display: block;
-  position: relative;
+.signup_modal .signup_form .input_area .input_password {
   margin-top: 28px;
-  border: 1px solid #cfd9de;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.signup_modal .signup_form .input_area .label_password.selected {
-  border-color: #1da1f2;
-  box-shadow: #1da1f2 0 0 0 1px;
-}
-
-.signup_modal .signup_form .input_area .label_password.error {
-  border-color: #e0245e;
-}
-
-.signup_modal .signup_form .input_area .label_password.selected.error {
-  border-color: #e0245e;
-  box-shadow: #e0245e 0 0 0 1px;
-}
-
-.signup_modal .signup_form .input_area .label_password .text_wrap {
-  position: absolute;
-  padding: 16px 8px 0;
-  color: #536471;
-  font-size: 1.7rem;
-  line-height: 2.4rem;
-}
-
-.signup_modal .signup_form .input_area .label_password.selected .text_wrap {
-  padding-top: 8px;
-  color: #1da1f2;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal .signup_form .input_area .label_password.correct .text_wrap {
-  padding-top: 8px;
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .label_password.selected.error
-  .text_wrap {
-  color: #e0245e;
-}
-
-.signup_modal .signup_form .input_area .label_password .input_wrap {
-  margin-top: 16px;
-  padding: 12px 8px 8px;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .label_password
-  .input_wrap
-  .input_password {
-  display: block;
-  width: 100%;
-  border: 0;
-  box-sizing: border-box;
-}
-
-.signup_modal
-  .signup_form
-  .input_area
-  .label_password
-  .input_wrap
-  .input_password:focus {
-  outline: none;
 }
 
 .signup_modal .signup_form .input_area .birth_wrap {
