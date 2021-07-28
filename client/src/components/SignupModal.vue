@@ -300,4 +300,16 @@ export default {
   opacity: 0.5;
   cursor: auto;
 }
+
+.signup_modal .signup_form .btn_submit:hover {
+  background-color: #1a91da;
+  transition: background-color 0.2s;
+}
+
+.signup_modal .signup_form .btn_submit:focus {
+  background-color: #1a91da;
+  box-shadow: #8ed0f9 0 0 0 2px;
+  outline: none;
+  transition: background-color 0.2s box-shadow 0.2s;
+}
 </style>

@@ -78,6 +78,14 @@ export default {
 .home_unauth .guide_area .signup_link:hover {
   text-decoration: none;
   background-color: #1a91da;
+  transition: background-color 0.2s;
+}
+
+.home_unauth .guide_area .signup_link:focus {
+  background-color: #1a91da;
+  box-shadow: #8ed0f9 0 0 0 2px;
+  outline: none;
+  transition: background-color 0.2s box-shadow 0.2s;
 }
 
 .home_unauth .guide_area .login_link {
@@ -98,6 +106,14 @@ export default {
 .home_unauth .guide_area .login_link:hover {
   text-decoration: none;
   background-color: rgba(29, 161, 242, 0.1);
+  transition: background-color 0.2s;
+}
+
+.home_unauth .guide_area .login_link:focus {
+  background-color: rgba(29, 161, 242, 0.1);
+  box-shadow: #8ed0f9 0 0 0 2px;
+  outline: none;
+  transition: background-color 0.2s box-shadow 0.2s;
 }
 
 .home_unauth .background_area {
