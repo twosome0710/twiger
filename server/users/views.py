@@ -26,9 +26,9 @@ def signUp(request):
         if list(collection.find({"email": serializer.data["email"]})): 
             return Response({"message": "사용중인 이메일 입니다."}, status=status.HTTP_400_BAD_REQUEST)
 
-        collection.insert_one(serializer.data)
-        pid = list(collection.find())[::-1][0]['_id']
-        
-        return Response({"pid": str(pid), "messge": "Sign up success"}, status=status.HTTP_201_CREATED)
+        id = collection.insert_one(serializer.data)
+
+        return Response({"pid": str(id.inserted_id), "message": "Sign up success"}, status=status.HTTP_201_CREATED)
+    
     else:
         return Response({"message": "유효한 이메일 주소를 입력하시오."}, status=status.HTTP_400_BAD_REQUEST)
