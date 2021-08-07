@@ -16,7 +16,7 @@
             <Input
               type="text"
               class="input_name"
-              label-name="이름 (필수)"
+              placeholder="이름 (필수)"
               :max-length="50"
               :required="true"
               :autofocus="true"
@@ -27,7 +27,7 @@
             <Input
               type="email"
               class="input_email"
-              label-name="이메일 (필수)"
+              placeholder="이메일 (필수)"
               :required="true"
               :value="email"
               :correct="isEmailCorrect"
@@ -37,7 +37,7 @@
             <Input
               type="password"
               class="input_password"
-              label-name="패스워드 (필수)"
+              placeholder="패스워드 (필수)"
               :required="true"
               :value="password"
               :correct="isPasswordCorrect"

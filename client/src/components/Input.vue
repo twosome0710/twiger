@@ -8,7 +8,7 @@
     }"
   >
     <div class="text_wrap">
-      <span class="text">{{ labelName }}</span>
+      <span class="text">{{ placeholder }}</span>
     </div>
     <div class="input_wrap">
       <input
@@ -39,7 +39,7 @@ export default {
     value: String,
     correct: Boolean,
     error: Boolean,
-    labelName: String,
+    placeholder: String,
     maxLength: Number,
     required: Boolean,
     autofocus: Boolean,
