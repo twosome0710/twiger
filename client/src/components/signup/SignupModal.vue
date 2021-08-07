@@ -56,14 +56,12 @@
               />
             </div>
           </div>
-          <button
-            type="submit"
+          <SubmitButton
             class="btn_submit"
+            text="가입하기"
             :disabled="!isFormCompleted"
-            @click="submitHandler"
-          >
-            가입하기
-          </button>
+            :submitHandler="submitHandler"
+          />
         </div>
       </form>
     </div>
@@ -74,6 +72,7 @@
 import router from "@/router";
 import Input from "@/components/common/Input.vue";
 import InputBirth from "@/components/common/InputBirth.vue";
+import SubmitButton from "@/components/common/SubmitButton.vue";
 
 function inputNameHandler(event) {
   event.preventDefault();
@@ -116,6 +115,7 @@ export default {
   components: {
     Input,
     InputBirth,
+    SubmitButton,
   },
   data: function () {
     return {
@@ -242,33 +242,6 @@ export default {
 }
 
 .signup_modal .signup_form .btn_submit {
-  width: 100%;
   margin-top: 100px;
-  border: 0;
-  border-radius: 19px;
-  background-color: #1da1f2;
-  color: #fff;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 38px;
-  text-align: center;
-  cursor: pointer;
-}
-
-.signup_modal .signup_form .btn_submit:disabled {
-  opacity: 0.5;
-  cursor: auto;
-}
-
-.signup_modal .signup_form .btn_submit:hover {
-  background-color: #1a91da;
-  transition: background-color 0.2s;
-}
-
-.signup_modal .signup_form .btn_submit:focus {
-  background-color: #1a91da;
-  box-shadow: #8ed0f9 0 0 0 2px;
-  outline: none;
-  transition: background-color 0.2s box-shadow 0.2s;
 }
 </style>
