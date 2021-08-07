@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "SignupInput",
+  name: "Input",
   data: function () {
     return {
       selected: this.autofocus,
