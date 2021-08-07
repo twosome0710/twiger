@@ -51,15 +51,8 @@
               </p>
               <InputBirth
                 class="input_birth"
-                :year="year"
-                :month="month"
-                :day="day"
-                :isYearError="isYearError"
-                :isMonthError="isMonthError"
-                :isDayError="isDayError"
-                :inputYearHandler="inputYearHandler"
-                :inputMonthHandler="inputMonthHandler"
-                :inputDayHandler="inputDayHandler"
+                :emitBirth="emitBirth"
+                :emitIsBirthCorrect="emitIsBirthCorrect"
               />
             </div>
           </div>
@@ -97,21 +90,6 @@ function inputPasswordHandler(event) {
   this.password = event.target.value;
 }
 
-function inputYearHandler(event) {
-  event.preventDefault();
-  this.year = event.target.value;
-}
-
-function inputMonthHandler(event) {
-  event.preventDefault();
-  this.month = event.target.value;
-}
-
-function inputDayHandler(event) {
-  event.preventDefault();
-  this.day = event.target.value;
-}
-
 async function submitHandler(event) {
   event.preventDefault();
   const uri = `${process.env.VUE_APP_API_URI}/users`;
@@ -121,7 +99,6 @@ async function submitHandler(event) {
     password: this.password,
     birth: this.birth,
   };
-  // console.log(data);
   const response = await fetch(uri, {
     method: "post",
     mode: "cors",
@@ -145,9 +122,8 @@ export default {
       name: "",
       email: "",
       password: "",
-      year: "",
-      month: "",
-      day: "",
+      birth: "",
+      isBirthCorrect: true,
     };
   },
   computed: {
@@ -167,50 +143,33 @@ export default {
     isPasswordCorrect() {
       return 0 < this.password.length && this.password.length <= 50;
     },
-    isYearError() {
-      const re = /\d{4}/;
-      return this.year.length > 0 && !re.test(this.year);
-    },
-    isMonthError() {
-      const re = /^(0?[1-9]|1[0-2])$/;
-      return this.month.length > 0 && !re.test(this.month);
-    },
-    isDayError() {
-      const re = /^(0?[1-9]|[12][0-9]|3[01])$/;
-      return this.day.length > 0 && !re.test(this.day);
-    },
     isFormCompleted() {
       return (
         this.isNameCorrect &&
         this.isEmailCorrect &&
         this.isPasswordCorrect &&
-        !this.isYearError &&
-        !this.isMonthError &&
-        !this.isDayError
+        this.isBirthCorrect
       );
-    },
-    birth() {
-      if (this.year && this.month && this.day) {
-        const zeroPadMonth = this.month.padStart(2, "0");
-        const zeroPadDay = this.day.padStart(2, "0");
-        return `${this.year}-${zeroPadMonth}-${zeroPadDay}`;
-      }
-      return null;
     },
   },
   methods: {
     inputNameHandler,
     inputEmailHandler,
     inputPasswordHandler,
-    inputYearHandler,
-    inputMonthHandler,
-    inputDayHandler,
     submitHandler,
+    emitBirth(birth) {
+      this.birth = birth;
+    },
+    emitIsBirthCorrect(isBirthCorrect) {
+      this.isBirthCorrect = isBirthCorrect;
+    },
   },
 };
 </script>
 
 <style>
+@charset "utf-8";
+
 .signup_modal_overlay {
   position: absolute;
   top: 0;

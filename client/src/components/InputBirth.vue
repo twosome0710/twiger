@@ -4,8 +4,8 @@
       <label
         class="label_year"
         :class="{
-          selected: isYearSelected,
-          error: isYearError,
+          selected: year.selected,
+          error: !isYearCorrect,
         }"
       >
         <div class="text_wrap">
@@ -17,10 +17,11 @@
             id="year"
             class="input_year"
             maxlength="4"
-            :value="year"
-            @focus="isYearSelected = true"
-            @blur="isYearSelected = false"
-            @input="inputYearHandler"
+            v-model="year.value"
+            :required="required"
+            @focus="year.selected = true"
+            @blur="year.selected = false"
+            @input="inputHandler"
           />
         </div>
       </label>
@@ -30,8 +31,8 @@
         for="month"
         class="label_month"
         :class="{
-          selected: isMonthSelected,
-          error: isMonthError,
+          selected: month.selected,
+          error: !isMonthCorrect,
         }"
       >
         <div class="text_wrap">
@@ -43,10 +44,11 @@
             id="month"
             class="input_month"
             maxlength="2"
-            :value="month"
-            @focus="isMonthSelected = true"
-            @blur="isMonthSelected = false"
-            @input="inputMonthHandler"
+            v-model="month.value"
+            :required="required"
+            @focus="month.selected = true"
+            @blur="month.selected = false"
+            @input="inputHandler"
           />
         </div>
       </label>
@@ -54,7 +56,7 @@
     <div class="day">
       <label
         class="label_day"
-        :class="{ selected: isDaySelected, error: isDayError }"
+        :class="{ selected: day.selected, error: !isDayCorrect }"
       >
         <div class="text_wrap">
           <span class="text">일</span>
@@ -65,10 +67,11 @@
             id="day"
             class="input_day"
             maxlength="2"
-            :value="day"
-            @focus="isDaySelected = true"
-            @blur="isDaySelected = false"
-            @input="inputDayHandler"
+            v-model="day.value"
+            :required="required"
+            @focus="day.selected = true"
+            @blur="day.selected = false"
+            @input="inputHandler"
           />
         </div>
       </label>
@@ -77,30 +80,122 @@
 </template>
 
 <script>
+function isLeapYear(year) {
+  const numYear = Number(year);
+  return (numYear % 4 === 0 && numYear % 100 !== 0) || numYear % 400 === 0;
+}
+
+function isValidDate(year, month, day) {
+  const today = new Date();
+  const givenDate = new Date(`${year}-${month}-${day}`);
+
+  if (Number(month) === 2) {
+    if (isLeapYear(year) && Number(day) > 29) {
+      return false;
+    } else if (!isLeapYear(year) && Number(day) > 28) {
+      return false;
+    }
+  } else if (givenDate > today) {
+    return false;
+  }
+  return true;
+}
+
 export default {
   name: "InputBirth",
+  props: {
+    required: Boolean,
+    emitBirth: Function,
+    emitIsBirthCorrect: Function,
+  },
   data: function () {
     return {
-      isYearSelected: false,
-      isMonthSelected: false,
-      isDaySelected: false,
+      year: {
+        value: "",
+        selected: false,
+      },
+      month: {
+        value: "",
+        selected: false,
+      },
+      day: {
+        value: "",
+        selected: false,
+      },
     };
   },
-  props: {
-    year: String,
-    month: String,
-    day: String,
-    isYearError: Boolean,
-    isMonthError: Boolean,
-    isDayError: Boolean,
-    inputYearHandler: Function,
-    inputMonthHandler: Function,
-    inputDayHandler: Function,
+  computed: {
+    isYearCorrect() {
+      const re = /\d{4}/;
+      return (
+        (this.year.value.length === 0 &&
+          this.month.value.length === 0 &&
+          this.day.value.length === 0) ||
+        (re.test(this.year.value) &&
+          this.year.value <= new Date().getFullYear())
+      );
+    },
+    isMonthCorrect() {
+      const re = /^(0?[1-9]|1[0-2])$/;
+      return (
+        (this.year.value.length === 0 &&
+          this.month.value.length === 0 &&
+          this.day.value.length === 0) ||
+        (re.test(this.month.value) && !this.isYearCorrect) ||
+        (re.test(this.month.value) &&
+          this.isYearCorrect &&
+          (this.month.value <= new Date().getMonth() + 1 ||
+            this.year.value < new Date().getFullYear()))
+      );
+    },
+    isDayCorrect() {
+      const re = /^(0?[1-9]|[12][0-9]|3[01])$/;
+      return (
+        (this.year.value.length === 0 &&
+          this.month.value.length === 0 &&
+          this.day.value.length === 0) ||
+        (re.test(this.day.value) && !this.isMonthCorrect) ||
+        (re.test(this.day.value) &&
+          this.isMonthCorrect &&
+          isValidDate(this.year.value, this.month.value, this.day.value))
+      );
+    },
+    birth() {
+      if (!this.isYearCorrect || !this.isMonthCorrect || !this.isDayCorrect) {
+        return "";
+      }
+      if (!this.year.value || !this.month.value || !this.day.value) {
+        return "";
+      }
+      const zeroPadMonth = this.month.value.startsWith("0", 2);
+      const zeroPadDay = this.day.value.startsWith("0", 2);
+      return `${this.year.value}-${zeroPadMonth}-${zeroPadDay}`;
+    },
+    isBirthCorrect() {
+      if (this.required) {
+        return (
+          this.isYearCorrect &&
+          this.isMonthCorrect &&
+          this.isDayCorrect &&
+          this.birth.length > 0
+        );
+      }
+      return this.isYearCorrect && this.isMonthCorrect && this.isDayCorrect;
+    },
+  },
+  methods: {
+    inputHandler(event) {
+      event.preventDefault();
+      this.emitBirth(this.birth);
+      this.emitIsBirthCorrect(this.isBirthCorrect);
+    },
   },
 };
 </script>
 
 <style>
+@charset "utf-8";
+
 .birth_box {
   display: table;
   table-layout: fixed;
