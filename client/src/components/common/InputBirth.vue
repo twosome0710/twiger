@@ -193,7 +193,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @charset "utf-8";
 
 .birth_box {

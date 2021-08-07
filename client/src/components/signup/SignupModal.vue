@@ -5,7 +5,7 @@
         <div class="signup_form">
           <div class="logo_area">
             <img
-              src="../assets/images/logo_blue.png"
+              src="@/assets/images/logo_blue.png"
               alt="트위저"
               height="25"
               class="logo"
@@ -71,9 +71,9 @@
 </template>
 
 <script>
-import router from "../router";
-import Input from "./Input.vue";
-import InputBirth from "./InputBirth.vue";
+import router from "@/router";
+import Input from "@/components/common/Input.vue";
+import InputBirth from "@/components/common/InputBirth.vue";
 
 function inputNameHandler(event) {
   event.preventDefault();

@@ -3,7 +3,7 @@
     <div class="guide_area">
       <div class="logo_area">
         <img
-          src="../assets/images/logo_blue.png"
+          src="@/assets/images/logo_blue.png"
           alt="트위저 로고"
           width="45"
           class="logo"
@@ -16,7 +16,7 @@
     </div>
     <div class="background_area">
       <img
-        src="../assets/images/logo_white.png"
+        src="@/assets/images/logo_white.png"
         alt="트위저 로고"
         width="300"
         class="logo"
