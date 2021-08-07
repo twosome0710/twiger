@@ -105,6 +105,7 @@ export default {
   display: block;
   width: 100%;
   border: 0;
+  background-color: transparent;
   box-sizing: border-box;
 }
 
