@@ -36,7 +36,7 @@ export default {
   cursor: pointer;
 }
 
-.btn_submit:disabled {
+.btn_submit[disabled] {
   opacity: 0.5;
   cursor: auto;
 }
@@ -44,6 +44,10 @@ export default {
 .btn_submit:hover {
   background-color: #1a91da;
   transition: background-color 0.2s;
+}
+
+.btn_submit[disabled]:hover {
+  background-color: #1da1f2;
 }
 
 .btn_submit:focus {
