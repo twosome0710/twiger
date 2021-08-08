@@ -35,15 +35,36 @@ export default {
     };
   },
   props: {
-    type: String,
-    value: String,
-    correct: Boolean,
+    type: {
+      type: String,
+      default: "text",
+    },
+    value: {
+      type: String,
+      required: true,
+    },
+    correct: {
+      type: Boolean,
+      required: true,
+    },
     error: Boolean,
-    placeholder: String,
+    placeholder: {
+      type: String,
+      required: true,
+    },
     maxLength: Number,
-    required: Boolean,
-    autofocus: Boolean,
-    inputHandler: Function,
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    autofocus: {
+      type: Boolean,
+      default: false,
+    },
+    inputHandler: {
+      type: Function,
+      required: true,
+    },
   },
 };
 </script>
