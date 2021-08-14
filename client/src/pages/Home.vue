@@ -11,8 +11,8 @@
       </div>
       <p class="introduction_text">지금 일어나고 있는 일</p>
       <p class="signup_text">오늘 트위터에 가입하세요.</p>
-      <a href="/signup" class="signup_link">가입하기</a>
-      <a href="/login" class="login_link">로그인</a>
+      <router-link to="/signup" class="signup_link">가입하기</router-link>
+      <router-link to="/login" class="login_link">로그인</router-link>
     </div>
     <div class="background_area">
       <img

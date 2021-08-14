@@ -30,7 +30,7 @@
       </div>
     </form>
     <div class="link_area">
-      <a href="/signup" class="signup_link">트위저 가입</a>
+      <router-link to="/signup" class="signup_link">트위저 가입</router-link>
     </div>
   </section>
 </template>
