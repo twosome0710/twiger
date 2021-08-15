@@ -31,4 +31,4 @@ def signUp(request):
         return Response({"pid": str(id.inserted_id), "message": "Sign up success"}, status=status.HTTP_201_CREATED)
     
     else:
-        return Response({"message": "유효한 이메일 주소를 입력하시오."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"message": "회원 가입에 실패하셨습니다."}, status=status.HTTP_400_BAD_REQUEST)
