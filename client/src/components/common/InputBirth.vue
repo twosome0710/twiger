@@ -167,8 +167,8 @@ export default {
       if (!this.year.value || !this.month.value || !this.day.value) {
         return "";
       }
-      const zeroPadMonth = this.month.value.startsWith("0", 2);
-      const zeroPadDay = this.day.value.startsWith("0", 2);
+      const zeroPadMonth = this.month.value.padStart("0", 2);
+      const zeroPadDay = this.day.value.padStart("0", 2);
       return `${this.year.value}-${zeroPadMonth}-${zeroPadDay}`;
     },
     isBirthCorrect() {

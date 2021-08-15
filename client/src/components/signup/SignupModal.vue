@@ -98,8 +98,12 @@ async function submitHandler(event) {
     password: this.password,
     birth: this.birth,
   };
+  console.log({ data });
   const response = await fetch(uri, {
-    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
     mode: "cors",
     body: JSON.stringify(data),
   });
