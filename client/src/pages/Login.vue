@@ -69,6 +69,9 @@ export default {
         password: password.value,
       };
       const response = await fetch(uri, {
+        headers: {
+          "Content-Type": "application/json",
+        },
         method: "post",
         mode: "cors",
         body: JSON.stringify(data),
