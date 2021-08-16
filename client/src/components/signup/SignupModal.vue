@@ -61,6 +61,7 @@
             text="가입하기"
             :disabled="!isFormCompleted"
             :submitHandler="submitHandler"
+            :loading="loading"
           />
         </div>
       </form>
@@ -99,18 +100,25 @@ async function submitHandler(event) {
     birth: this.birth,
   };
   console.log({ data });
-  const response = await fetch(uri, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    mode: "cors",
-    body: JSON.stringify(data),
-  });
-  if (response.ok) {
-    router.push("/login");
-  } else {
+  this.loading = true;
+  try {
+    const response = await fetch(uri, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      mode: "cors",
+      body: JSON.stringify(data),
+    });
+    if (response.ok) {
+      router.push("/login");
+    } else {
+      alert("회원가입 실패");
+    }
+  } catch {
     alert("회원가입 실패");
+  } finally {
+    this.loading = false;
   }
 }
 
@@ -128,6 +136,7 @@ export default {
       password: "",
       birth: "",
       isBirthCorrect: true,
+      loading: false,
     };
   },
   computed: {

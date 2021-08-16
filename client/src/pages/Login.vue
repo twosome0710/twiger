@@ -24,8 +24,9 @@
         <SubmitButton
           class="submit_btn"
           text="로그인"
-          :disabled="email.length === 0 || password.length === 0"
+          :disabled="email.length === 0 || password.length === 0 || loading"
           :submitHandler="submitHandler"
+          :loading="loading"
         />
       </div>
     </form>
@@ -38,7 +39,7 @@
 <script>
 import Input from "@/components/common/Input.vue";
 import SubmitButton from "@/components/common/SubmitButton.vue";
-import router from "@/router";
+// import router from "@/router";
 import { ref } from "vue";
 
 export default {
@@ -61,6 +62,8 @@ export default {
       password.value = event.target.value;
     }
 
+    const loading = ref(false);
+
     async function submitHandler(event) {
       event.preventDefault();
       const uri = `${process.env.VUE_APP_API_URI}/users/token`;
@@ -68,18 +71,25 @@ export default {
         email: email.value,
         password: password.value,
       };
-      const response = await fetch(uri, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "post",
-        mode: "cors",
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        router.push("/login");
-      } else {
-        alert("회원가입 실패");
+      try {
+        loading.value = true;
+        const response = await fetch(uri, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "post",
+          mode: "cors",
+          body: JSON.stringify(data),
+        });
+        if (response.ok) {
+          alert("로그인 성공");
+        } else {
+          alert("로그인 실패");
+        }
+      } catch {
+        alert("로그인 실패");
+      } finally {
+        loading.value = false;
       }
     }
 
@@ -88,6 +98,7 @@ export default {
       inputEmailHandler,
       password,
       inputPasswordHandler,
+      loading,
       submitHandler,
     };
   },

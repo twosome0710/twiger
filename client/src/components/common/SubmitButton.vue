@@ -2,7 +2,8 @@
   <button
     type="submit"
     class="btn_submit"
-    :disabled="disabled"
+    :class="{ loading }"
+    :disabled="disabled || loading"
     @click="submitHandler"
   >
     {{ text }}
@@ -15,6 +16,7 @@ export default {
   props: {
     text: String,
     disabled: Boolean,
+    loading: Boolean,
     submitHandler: Function,
   },
 };
@@ -24,6 +26,8 @@ export default {
 @charset "utf-8";
 
 .btn_submit {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   border: 0;
   border-radius: 19px;
@@ -34,6 +38,42 @@ export default {
   line-height: 38px;
   text-align: center;
   cursor: pointer;
+}
+
+.btn_submit.loading:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #1da1f2;
+}
+
+.btn_submit.loading:after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border: 4px solid transparent;
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  animation: button-loading-spinner 1s ease infinite;
+}
+
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0turn);
+  }
+
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 .btn_submit[disabled] {
