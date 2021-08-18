@@ -27,13 +27,10 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   name: "Input",
-  data: function () {
-    return {
-      selected: this.autofocus,
-    };
-  },
   props: {
     type: {
       type: String,
@@ -65,6 +62,13 @@ export default {
       type: Function,
       required: true,
     },
+  },
+  setup(props) {
+    const selected = ref(props.autofocus);
+
+    return {
+      selected,
+    };
   },
 };
 </script>

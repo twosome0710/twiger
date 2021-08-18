@@ -43,6 +43,7 @@ import SubmitButton from "@/components/common/SubmitButton.vue";
 import { ref } from "vue";
 
 export default {
+  name: "Login",
   components: {
     Input,
     SubmitButton,

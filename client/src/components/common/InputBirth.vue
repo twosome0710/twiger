@@ -80,6 +80,8 @@
 </template>
 
 <script>
+import { computed, reactive } from "vue";
+
 function isLeapYear(year) {
   const numYear = Number(year);
   return (numYear % 4 === 0 && numYear % 100 !== 0) || numYear % 400 === 0;
@@ -108,88 +110,187 @@ export default {
     emitBirth: Function,
     emitIsBirthCorrect: Function,
   },
-  data: function () {
-    return {
-      year: {
-        value: "",
-        selected: false,
-      },
-      month: {
-        value: "",
-        selected: false,
-      },
-      day: {
-        value: "",
-        selected: false,
-      },
-    };
-  },
-  computed: {
-    isYearCorrect() {
+  setup(props) {
+    const year = reactive({
+      value: "",
+      selected: false,
+    });
+
+    const month = reactive({
+      value: "",
+      selected: false,
+    });
+
+    const day = reactive({
+      value: "",
+      selected: false,
+    });
+
+    const isYearCorrect = computed(() => {
       const re = /\d{4}/;
       return (
-        (this.year.value.length === 0 &&
-          this.month.value.length === 0 &&
-          this.day.value.length === 0) ||
-        (re.test(this.year.value) &&
-          this.year.value <= new Date().getFullYear())
+        (year.value.length === 0 &&
+          month.value.length === 0 &&
+          day.value.length === 0) ||
+        (re.test(year.value) && year.value <= new Date().getFullYear())
       );
-    },
-    isMonthCorrect() {
+    });
+
+    const isMonthCorrect = computed(() => {
       const re = /^(0?[1-9]|1[0-2])$/;
       return (
-        (this.year.value.length === 0 &&
-          this.month.value.length === 0 &&
-          this.day.value.length === 0) ||
-        (re.test(this.month.value) && !this.isYearCorrect) ||
-        (re.test(this.month.value) &&
-          this.isYearCorrect &&
-          (this.month.value <= new Date().getMonth() + 1 ||
-            this.year.value < new Date().getFullYear()))
+        (year.value.length === 0 &&
+          month.value.length === 0 &&
+          day.value.length === 0) ||
+        (re.test(month.value) && !isYearCorrect.value) ||
+        (re.test(month.value) &&
+          isYearCorrect.value &&
+          (month.value <= new Date().getMonth() + 1 ||
+            year.value < new Date().getFullYear()))
       );
-    },
-    isDayCorrect() {
+    });
+
+    const isDayCorrect = computed(() => {
       const re = /^(0?[1-9]|[12][0-9]|3[01])$/;
       return (
-        (this.year.value.length === 0 &&
-          this.month.value.length === 0 &&
-          this.day.value.length === 0) ||
-        (re.test(this.day.value) && !this.isMonthCorrect) ||
-        (re.test(this.day.value) &&
-          this.isMonthCorrect &&
-          isValidDate(this.year.value, this.month.value, this.day.value))
+        (year.value.length === 0 &&
+          month.value.length === 0 &&
+          day.value.length === 0) ||
+        (re.test(day.value) && !isMonthCorrect.value) ||
+        (re.test(day.value) &&
+          isMonthCorrect.value &&
+          isValidDate(year.value, month.value, day.value))
       );
-    },
-    birth() {
-      if (!this.isYearCorrect || !this.isMonthCorrect || !this.isDayCorrect) {
+    });
+
+    const birth = computed(() => {
+      if (
+        !isYearCorrect.value ||
+        !isMonthCorrect.value ||
+        !isDayCorrect.value
+      ) {
         return "";
       }
-      if (!this.year.value || !this.month.value || !this.day.value) {
+      if (!year.value || !month.value || !day.value) {
         return "";
       }
-      const zeroPadMonth = this.month.value.padStart("0", 2);
-      const zeroPadDay = this.day.value.padStart("0", 2);
-      return `${this.year.value}-${zeroPadMonth}-${zeroPadDay}`;
-    },
-    isBirthCorrect() {
-      if (this.required) {
+      const zeroPadMonth = month.value.padStart(2, "0");
+      const zeroPadDay = day.value.padStart(2, "0");
+      return `${year.value}-${zeroPadMonth}-${zeroPadDay}`;
+    });
+
+    const isBirthCorrect = computed(() => {
+      if (props.required) {
         return (
-          this.isYearCorrect &&
-          this.isMonthCorrect &&
-          this.isDayCorrect &&
-          this.birth.length > 0
+          isYearCorrect.value &&
+          isMonthCorrect.value &&
+          isDayCorrect.value &&
+          birth.value.length > 0
         );
       }
-      return this.isYearCorrect && this.isMonthCorrect && this.isDayCorrect;
-    },
-  },
-  methods: {
-    inputHandler(event) {
+      return isYearCorrect.value && isMonthCorrect.value && isDayCorrect.value;
+    });
+
+    const inputHandler = (event) => {
       event.preventDefault();
-      this.emitBirth(this.birth);
-      this.emitIsBirthCorrect(this.isBirthCorrect);
-    },
+      props.emitBirth(birth.value);
+      props.emitIsBirthCorrect(isBirthCorrect.value);
+    };
+
+    return {
+      year,
+      month,
+      day,
+      isYearCorrect,
+      isMonthCorrect,
+      isDayCorrect,
+      birth,
+      isBirthCorrect,
+      inputHandler,
+    };
   },
+  // data: function () {
+  //   return {
+  //     year: {
+  //       value: "",
+  //       selected: false,
+  //     },
+  //     month: {
+  //       value: "",
+  //       selected: false,
+  //     },
+  //     day: {
+  //       value: "",
+  //       selected: false,
+  //     },
+  //   };
+  // },
+  // computed: {
+  //   isYearCorrect() {
+  //     const re = /\d{4}/;
+  //     return (
+  //       (this.year.value.length === 0 &&
+  //         this.month.value.length === 0 &&
+  //         this.day.value.length === 0) ||
+  //       (re.test(this.year.value) &&
+  //         this.year.value <= new Date().getFullYear())
+  //     );
+  //   },
+  //   isMonthCorrect() {
+  //     const re = /^(0?[1-9]|1[0-2])$/;
+  //     return (
+  //       (this.year.value.length === 0 &&
+  //         this.month.value.length === 0 &&
+  //         this.day.value.length === 0) ||
+  //       (re.test(this.month.value) && !this.isYearCorrect) ||
+  //       (re.test(this.month.value) &&
+  //         this.isYearCorrect &&
+  //         (this.month.value <= new Date().getMonth() + 1 ||
+  //           this.year.value < new Date().getFullYear()))
+  //     );
+  //   },
+  //   isDayCorrect() {
+  //     const re = /^(0?[1-9]|[12][0-9]|3[01])$/;
+  //     return (
+  //       (this.year.value.length === 0 &&
+  //         this.month.value.length === 0 &&
+  //         this.day.value.length === 0) ||
+  //       (re.test(this.day.value) && !this.isMonthCorrect) ||
+  //       (re.test(this.day.value) &&
+  //         this.isMonthCorrect &&
+  //         isValidDate(this.year.value, this.month.value, this.day.value))
+  //     );
+  //   },
+  //   birth() {
+  //     if (!this.isYearCorrect || !this.isMonthCorrect || !this.isDayCorrect) {
+  //       return "";
+  //     }
+  //     if (!this.year.value || !this.month.value || !this.day.value) {
+  //       return "";
+  //     }
+  //     const zeroPadMonth = this.month.value.padStart("0", 2);
+  //     const zeroPadDay = this.day.value.padStart("0", 2);
+  //     return `${this.year.value}-${zeroPadMonth}-${zeroPadDay}`;
+  //   },
+  //   isBirthCorrect() {
+  //     if (this.required) {
+  //       return (
+  //         this.isYearCorrect &&
+  //         this.isMonthCorrect &&
+  //         this.isDayCorrect &&
+  //         this.birth.length > 0
+  //       );
+  //     }
+  //     return this.isYearCorrect && this.isMonthCorrect && this.isDayCorrect;
+  //   },
+  // },
+  // methods: {
+  //   inputHandler(event) {
+  //     event.preventDefault();
+  //     this.emitBirth(this.birth);
+  //     this.emitIsBirthCorrect(this.isBirthCorrect);
+  //   },
+  // },
 };
 </script>
 
