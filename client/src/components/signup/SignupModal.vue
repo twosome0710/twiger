@@ -61,6 +61,7 @@
             text="가입하기"
             :disabled="!isFormCompleted"
             :submitHandler="submitHandler"
+            :loading="loading"
           />
         </div>
       </form>
@@ -73,46 +74,7 @@ import router from "@/router";
 import Input from "@/components/common/Input.vue";
 import InputBirth from "@/components/common/InputBirth.vue";
 import SubmitButton from "@/components/common/SubmitButton.vue";
-
-function inputNameHandler(event) {
-  event.preventDefault();
-  this.name = event.target.value;
-}
-
-function inputEmailHandler(event) {
-  event.preventDefault();
-  this.email = event.target.value;
-}
-
-function inputPasswordHandler(event) {
-  event.preventDefault();
-  this.password = event.target.value;
-}
-
-async function submitHandler(event) {
-  event.preventDefault();
-  const uri = `${process.env.VUE_APP_API_URI}/users`;
-  const data = {
-    name: this.name,
-    email: this.email,
-    password: this.password,
-    birth: this.birth,
-  };
-  console.log({ data });
-  const response = await fetch(uri, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    mode: "cors",
-    body: JSON.stringify(data),
-  });
-  if (response.ok) {
-    router.push("/login");
-  } else {
-    alert("회원가입 실패");
-  }
-}
+import { computed, ref } from "vue";
 
 export default {
   name: "SignupModal",
@@ -121,52 +83,122 @@ export default {
     InputBirth,
     SubmitButton,
   },
-  data: function () {
-    return {
-      name: "",
-      email: "",
-      password: "",
-      birth: "",
-      isBirthCorrect: true,
+  setup() {
+    const name = ref("");
+
+    const isNameCorrect = computed(() => {
+      return 0 < name.value.length && name.value.length <= 50;
+    });
+
+    const inputNameHandler = (event) => {
+      event.preventDefault();
+      name.value = event.target.value;
     };
-  },
-  computed: {
-    isNameCorrect() {
-      return 0 < this.name.length && this.name.length <= 50;
-    },
-    isEmailCorrect() {
+
+    const email = ref("");
+
+    const isEmailCorrect = computed(() => {
       const re =
         /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-      return this.email.length > 0 && re.test(this.email);
-    },
-    isEmailError() {
+      return email.value.length > 0 && re.test(email.value);
+    });
+
+    const isEmailError = computed(() => {
       const re =
         /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-      return this.email.length > 0 && !re.test(this.email);
-    },
-    isPasswordCorrect() {
-      return 0 < this.password.length && this.password.length <= 50;
-    },
-    isFormCompleted() {
+      return email.value.length > 0 && !re.test(email.value);
+    });
+
+    const inputEmailHandler = (event) => {
+      event.preventDefault();
+      email.value = event.target.value;
+    };
+
+    const password = ref("");
+
+    const isPasswordCorrect = computed(() => {
+      return 0 < password.value.length && password.value.length <= 50;
+    });
+
+    const inputPasswordHandler = (event) => {
+      event.preventDefault();
+      password.value = event.target.value;
+    };
+
+    const birth = ref("");
+
+    const isBirthCorrect = ref(true);
+
+    const emitBirth = (newBirth) => {
+      birth.value = newBirth;
+    };
+
+    const emitIsBirthCorrect = (newIsBirthCorrect) => {
+      isBirthCorrect.value = newIsBirthCorrect;
+    };
+
+    const isFormCompleted = computed(() => {
       return (
-        this.isNameCorrect &&
-        this.isEmailCorrect &&
-        this.isPasswordCorrect &&
-        this.isBirthCorrect
+        isNameCorrect.value &&
+        isEmailCorrect.value &&
+        isPasswordCorrect.value &&
+        isBirthCorrect.value
       );
-    },
-  },
-  methods: {
-    inputNameHandler,
-    inputEmailHandler,
-    inputPasswordHandler,
-    submitHandler,
-    emitBirth(birth) {
-      this.birth = birth;
-    },
-    emitIsBirthCorrect(isBirthCorrect) {
-      this.isBirthCorrect = isBirthCorrect;
-    },
+    });
+
+    const loading = ref(false);
+
+    const submitHandler = async (event) => {
+      event.preventDefault();
+      const uri = `${process.env.VUE_APP_API_URI}/users`;
+      const data = {
+        name: name.value,
+        email: email.value,
+        password: password.value,
+        birth: birth.value,
+      };
+      console.log({ data });
+      loading.value = true;
+      try {
+        const response = await fetch(uri, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          mode: "cors",
+          body: JSON.stringify(data),
+        });
+        if (response.ok) {
+          router.push("/login");
+        } else {
+          alert("회원가입 실패");
+        }
+      } catch {
+        alert("회원가입 실패");
+      } finally {
+        loading.value = false;
+      }
+    };
+
+    return {
+      name,
+      isNameCorrect,
+      inputNameHandler,
+      email,
+      isEmailCorrect,
+      isEmailError,
+      inputEmailHandler,
+      password,
+      isPasswordCorrect,
+      inputPasswordHandler,
+      birth,
+      isBirthCorrect,
+      emitBirth,
+      emitIsBirthCorrect,
+      isFormCompleted,
+      loading,
+      submitHandler,
+    };
   },
 };
 </script>
