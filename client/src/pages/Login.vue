@@ -130,8 +130,8 @@ export default {
 }
 
 .login_section .login_form .submit_btn {
+  height: 46px;
   margin-top: 24px;
-  line-height: 46px;
   border-radius: 23px;
 }
 

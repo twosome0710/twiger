@@ -33,13 +33,13 @@ export default {
   position: relative;
   overflow: hidden;
   width: 100%;
+  height: 38px;
   border: 0;
   border-radius: 19px;
   background-color: #1da1f2;
   color: #fff;
   font-size: 1.5rem;
   font-weight: 700;
-  line-height: 38px;
   text-align: center;
   cursor: pointer;
 
