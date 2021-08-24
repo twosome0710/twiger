@@ -22,10 +22,11 @@
           :inputHandler="inputPasswordHandler"
         />
         <SubmitButton
+          type="submit"
           class="submit_btn"
-          text="로그인"
+          label="로그인"
           :disabled="email.length === 0 || password.length === 0 || loading"
-          :submitHandler="submitHandler"
+          :clickHandler="submitHandler"
           :loading="loading"
         />
       </div>
@@ -38,7 +39,7 @@
 
 <script>
 import Input from "@/components/common/Input.vue";
-import SubmitButton from "@/components/common/SubmitButton.vue";
+import SubmitButton from "@/components/common/SolidButton.vue";
 // import router from "@/router";
 import { ref } from "vue";
 

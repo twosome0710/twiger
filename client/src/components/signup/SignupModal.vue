@@ -57,10 +57,11 @@
             </div>
           </div>
           <SubmitButton
+            type="submit"
             class="btn_submit"
-            text="가입하기"
+            label="가입하기"
             :disabled="!isFormCompleted"
-            :submitHandler="submitHandler"
+            :clickHandler="submitHandler"
             :loading="loading"
           />
         </div>
@@ -73,7 +74,7 @@
 import router from "@/router";
 import Input from "@/components/common/Input.vue";
 import InputBirth from "@/components/common/InputBirth.vue";
-import SubmitButton from "@/components/common/SubmitButton.vue";
+import SubmitButton from "@/components/common/SolidButton.vue";
 import { computed, ref } from "vue";
 
 export default {
