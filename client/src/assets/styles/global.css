@@ -66,3 +66,16 @@ body,
 #app {
     height: 100%;
 }
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+}
+
+.content_area {
+    width: 598px;
+    height: 100%;
+    border-right: 1px solid #eff3f4;
+    border-left: 1px solid #eff3f4;
+}
