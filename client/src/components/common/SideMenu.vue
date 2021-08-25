@@ -12,17 +12,33 @@
     </h1>
     <nav class="nav_area">
       <div class="link_wrap">
-        <router-link to="/home" class="link">
-          <div class="container"><IconHome class="icon_home" />홈</div>
+        <router-link
+          to="/home"
+          class="link"
+          :class="{ selected: isCurRouteName('UserHome') }"
+        >
+          <div class="container">
+            <IconHomeSelected class="icon_home_selected" />
+            <IconHome class="icon_home" />
+            홈
+          </div>
         </router-link>
       </div>
       <div class="link_wrap">
-        <router-link to="#" class="link">
+        <router-link
+          to="#"
+          class="link"
+          :class="{ selected: isCurRouteName('Explore') }"
+        >
           <div class="container"><IconSharp class="icon_sharp" />탐색하기</div>
         </router-link>
       </div>
       <div class="link_wrap">
-        <router-link to="#" class="link">
+        <router-link
+          to="#"
+          class="link"
+          :class="{ selected: isCurRouteName('Profile') }"
+        >
           <div class="container">
             <IconProfile class="icon_profile" />프로필
           </div>
@@ -52,14 +68,34 @@
 
 <script>
 import IconHome from "@/components/icons/IconHome.vue";
+import IconHomeSelected from "@/components/icons/IconHomeSelected.vue";
 import IconSharp from "@/components/icons/IconSharp.vue";
 import IconProfile from "@/components/icons/IconProfile.vue";
 import TweetButton from "@/components/common/SolidButton.vue";
 import IconDots from "@/components/icons/IconDots.vue";
 
+import { useRoute } from "vue-router";
+
 export default {
   name: "SideMenu",
-  components: { IconSharp, IconHome, IconProfile, TweetButton, IconDots },
+  components: {
+    IconSharp,
+    IconHome,
+    IconHomeSelected,
+    IconProfile,
+    TweetButton,
+    IconDots,
+  },
+  setup() {
+    const route = useRoute();
+    const isCurRouteName = (name) => {
+      return route.name === name;
+    };
+
+    return {
+      isCurRouteName,
+    };
+  },
 };
 </script>
 
@@ -67,6 +103,7 @@ export default {
 @charset "utf-8";
 
 .main_header {
+  position: relative;
   width: 251px;
   height: 100%;
   padding: 0 12px;
@@ -129,13 +166,37 @@ export default {
           }
         }
 
+        &.selected {
+          font-weight: 700;
+
+          .icon_home,
+          .icon_sharp,
+          .icon_profile {
+            display: none;
+          }
+
+          .icon_home_selected {
+            display: inline-block;
+          }
+        }
+
+        .icon_home,
+        .icon_home_selected,
+        .icon_sharp,
+        .icon_profile {
+          width: 26px;
+          height: 26px;
+          margin-right: 16px;
+        }
+
         .icon_home,
         .icon_sharp,
         .icon_profile {
           display: inline-block;
-          width: 26px;
-          height: 26px;
-          margin-right: 16px;
+        }
+
+        .icon_home_selected {
+          display: none;
         }
       }
     }
