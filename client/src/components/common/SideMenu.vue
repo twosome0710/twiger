@@ -67,10 +67,8 @@ export default {
 @charset "utf-8";
 
 .main_header {
-  position: fixed;
-  top: 0;
-  bottom: 0;
   width: 251px;
+  height: 100%;
   padding: 0 12px;
 
   .title {
