@@ -72,18 +72,26 @@ export default {
   padding: 0 12px;
 
   .title {
+    padding: 2px 0;
+
     .link {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 50px;
-      height: 50px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
 
       &:hover {
         background-color: rgba(29, 161, 242, 0.1);
-        transition-property: background-color;
-        transition-duration: 0.2s;
+        transition: background-color 0.2s;
+      }
+
+      &:focus {
+        background-color: rgba(29, 161, 242, 0.1);
+        outline: none;
+        box-shadow: #8ecdf8 0 0 0 2px;
+        transition: background-color 0.2s box-shadow 0.2s;
       }
     }
   }
@@ -108,8 +116,16 @@ export default {
 
           .container {
             background-color: rgba(15, 20, 25, 0.1);
-            transition-property: background-color;
-            transition-duration: 0.2s;
+            transition: background-color 0.2s;
+          }
+        }
+
+        &:focus {
+          outline: none;
+
+          .container {
+            box-shadow: #878a8c 0 0 0 2px;
+            transition: box-shadow 0.2s;
           }
         }
 
@@ -152,6 +168,14 @@ export default {
 
       &:hover {
         background-color: rgba(15, 20, 25, 0.1);
+        transition: background-color 0.2s;
+      }
+
+      &:focus {
+        background-color: rgba(15, 20, 25, 0.1);
+        outline: none;
+        box-shadow: #878a8c 0 0 0 2px;
+        transition: background-color 0.2s box-shadow 0.2s;
       }
 
       .profile_area {
