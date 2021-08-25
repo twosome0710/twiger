@@ -112,7 +112,8 @@ export default {
 
 .login_section {
   max-width: 368px;
-  margin: 20px auto;
+  margin: 0 auto;
+  padding: 20px 0;
 }
 
 .login_section .title {
