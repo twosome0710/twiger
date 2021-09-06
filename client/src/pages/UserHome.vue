@@ -3,7 +3,9 @@
     <SideMenu />
     <main id="main" class="content_area user_home">
       <h2 class="title"><router-link to="/home">홈</router-link></h2>
-      <div class="container">트윗하기 영역</div>
+      <div class="container">
+        <TweetForm />
+      </div>
       <div class="container greeting_area">
         <p class="head_sentence">트위저에 오신 것을 환영합니다!</p>
         <p class="detail_sentence">
@@ -17,10 +19,11 @@
 </template>
 <script>
 import SideMenu from "@/components/common/SideMenu.vue";
+import TweetForm from "@/components/tweet/TweetForm.vue";
 
 export default {
   name: "UserHome",
-  components: { SideMenu },
+  components: { SideMenu, TweetForm },
 };
 </script>
 
