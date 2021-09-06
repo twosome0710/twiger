@@ -77,10 +77,33 @@ export default {
   padding: 8px 16px 12px;
 
   .profile_link {
+    position: relative;
     width: 48px;
     height: 48px;
     margin-right: 12px;
     border-radius: 50%;
+
+    &:focus {
+      outline: none;
+      box-shadow: rgb(142, 205, 248) 0 0 0 2px;
+      transition: box-shadow 0.2s;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      border: 1px solid rgba(0, 0, 0, 0.07);
+      border-radius: 50%;
+    }
+
+    &:hover:after {
+      background-color: rgba(26, 26, 26, 0.15);
+      transition: background-color 0.2s;
+    }
 
     .img {
       border-radius: 50%;
