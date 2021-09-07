@@ -63,7 +63,7 @@ export default {
 
     &:focus {
       background-color: rgba(0, 0, 0, 0.03);
-      box-shadow: #8ecdf8 0 0 0 2px;
+      box-shadow: #8ecdf8 0 0 0 2px inset;
       outline: none;
       transition: background-color 0.2s box-shadow 0.2s;
     }
