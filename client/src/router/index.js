@@ -3,6 +3,7 @@ import Home from "@/pages/Home.vue";
 import Signup from "@/pages/Signup.vue";
 import Login from "@/pages/Login.vue";
 import UserHome from "@/pages/UserHome.vue";
+import Connect from "@/pages/Connect.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/home",
     name: "UserHome",
     component: UserHome,
+  },
+  {
+    path: "/connect",
+    name: "Connect",
+    component: Connect,
   },
 ];
 
