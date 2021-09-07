@@ -2,9 +2,7 @@
   <div class="wrap">
     <SideMenu />
     <main id="main" class="content_area user_home">
-      <h2 class="title">
-        <router-link to="/home" class="link">홈</router-link>
-      </h2>
+      <h2 class="title">홈</h2>
       <div class="container">
         <TweetForm />
       </div>
@@ -38,10 +36,6 @@ export default {
     border-bottom: 1px solid #eff3f4;
     font-size: 2rem;
     line-height: 53px;
-
-    .link:hover {
-      text-decoration: none;
-    }
   }
 
   .container + .container {
