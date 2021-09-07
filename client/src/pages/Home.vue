@@ -32,6 +32,8 @@ export default {
 </script>
 
 <style>
+@charset "utf-8";
+
 .home_unauth {
   display: flex;
   flex-direction: row-reverse;

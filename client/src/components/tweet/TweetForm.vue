@@ -72,6 +72,8 @@ export default {
 </script>
 
 <style lang="scss">
+@charset "utf-8";
+
 .tweet_form {
   display: flex;
   padding: 8px 16px 12px;

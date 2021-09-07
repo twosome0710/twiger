@@ -74,6 +74,8 @@ export default {
 </script>
 
 <style scoped>
+@charset "utf-8";
+
 .label {
   display: block;
   position: relative;

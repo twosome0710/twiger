@@ -30,6 +30,8 @@ export default {
 </script>
 
 <style lang="scss">
+@charset "utf-8";
+
 .user_home {
   .title {
     padding: 0 16px;
