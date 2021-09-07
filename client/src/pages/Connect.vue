@@ -1,17 +1,19 @@
 <template>
   <div class="wrap">
     <SideMenu />
-    <main id="main" class="content_area connect">
-      <div class="title_area">
-        <button type="button" class="btn_back" @click="goBack">
-          <IconLeftArrow class="icon_back" />
-          <span class="btn_text">뒤로 가기</span>
-        </button>
-        <h2 class="title">연결하기</h2>
-      </div>
-      <div class="recommend_area">
-        <strong class="label">나를 위한 추천</strong>
-        <UserList :users="users" />
+    <main id="main" class="content_area">
+      <div class="connect">
+        <div class="title_area">
+          <button type="button" class="btn_back" @click="goBack">
+            <IconLeftArrow class="icon_back" />
+            <span class="btn_text">뒤로 가기</span>
+          </button>
+          <h2 class="title">연결하기</h2>
+        </div>
+        <div class="recommend_area">
+          <strong class="label">나를 위한 추천</strong>
+          <UserList :users="users" />
+        </div>
       </div>
     </main>
   </div>
