@@ -2,7 +2,9 @@
   <div class="wrap">
     <SideMenu />
     <main id="main" class="content_area user_home">
-      <h2 class="title"><router-link to="/home">홈</router-link></h2>
+      <h2 class="title">
+        <router-link to="/home" class="link">홈</router-link>
+      </h2>
       <div class="container">
         <TweetForm />
       </div>
@@ -12,7 +14,9 @@
           전 세계에서 무슨 일이 일어나고 있는지 알아보기에 최적인 장소입니다.
           지금 팔로우할 사람과 주제를 찾아보세요.
         </p>
-        <router-link to="#" class="link_start">시작해봅시다!</router-link>
+        <router-link to="/connect" class="link_start">
+          시작해봅시다!
+        </router-link>
       </div>
     </main>
   </div>
@@ -34,6 +38,10 @@ export default {
     border-bottom: 1px solid #eff3f4;
     font-size: 2rem;
     line-height: 53px;
+
+    .link:hover {
+      text-decoration: none;
+    }
   }
 
   .container + .container {
