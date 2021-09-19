@@ -19,7 +19,7 @@
             :class="{ selected: isCurRouteName('UserHome') }"
           >
             <div class="container">
-              <IconHomeSelected class="icon_home_selected" />
+              <IconHomeActive class="icon_home_selected" />
               <IconHome class="icon_home" />
               홈
             </div>
@@ -72,10 +72,10 @@
 
 <script>
 import IconHome from "@/components/icons/IconHome.vue";
-import IconHomeSelected from "@/components/icons/IconHomeSelected.vue";
+import IconHomeActive from "@/components/icons/IconHomeActive.vue";
 import IconSharp from "@/components/icons/IconSharp.vue";
 import IconProfile from "@/components/icons/IconProfile.vue";
-import TweetButton from "@/components/common/SolidButton.vue";
+import TweetButton from "@/components/common/BaseSolidButton.vue";
 import IconDots from "@/components/icons/IconDots.vue";
 
 import { useRoute } from "vue-router";
@@ -85,7 +85,7 @@ export default {
   components: {
     IconSharp,
     IconHome,
-    IconHomeSelected,
+    IconHomeActive,
     IconProfile,
     TweetButton,
     IconDots,

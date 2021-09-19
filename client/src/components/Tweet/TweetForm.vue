@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import SubmitButton from "@/components/common/SolidButton.vue";
+import SubmitButton from "@/components/common/BaseSolidButton.vue";
 
 import { ref } from "vue";
 

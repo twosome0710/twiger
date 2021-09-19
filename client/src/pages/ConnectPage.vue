@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import SideMenu from "@/components/common/SideMenu.vue";
+import SideMenu from "@/components/layout/TheSideMenu.vue";
 import IconLeftArrow from "@/components/icons/IconLeftArrow.vue";
-import UserList from "@/components/connect/UserList.vue";
+import UserList from "@/components/User/UserList.vue";
 
 import { useRouter } from "vue-router";
 import { ref } from "vue";

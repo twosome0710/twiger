@@ -72,9 +72,9 @@
 
 <script>
 import router from "@/router";
-import Input from "@/components/common/Input.vue";
-import InputBirth from "@/components/common/InputBirth.vue";
-import SubmitButton from "@/components/common/SolidButton.vue";
+import Input from "@/components/common/BaseInput.vue";
+import InputBirth from "./SignupInputBirth.vue";
+import SubmitButton from "@/components/common/BaseSolidButton.vue";
 import { computed, ref } from "vue";
 
 export default {

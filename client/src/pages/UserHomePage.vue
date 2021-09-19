@@ -20,8 +20,8 @@
   </div>
 </template>
 <script>
-import SideMenu from "@/components/common/SideMenu.vue";
-import TweetForm from "@/components/tweet/TweetForm.vue";
+import SideMenu from "@/components/layout/TheSideMenu.vue";
+import TweetForm from "@/components/Tweet/TweetForm.vue";
 
 export default {
   name: "UserHome",

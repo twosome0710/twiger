@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import SignupModal from "@/components/signup/SignupModal.vue";
-import Home from "./Home.vue";
+import SignupModal from "@/components/Signup/SignupModal.vue";
+import Home from "./HomePage.vue";
 
 export default {
   name: "Signup",

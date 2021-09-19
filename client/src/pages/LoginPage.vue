@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import Input from "@/components/common/Input.vue";
-import SubmitButton from "@/components/common/SolidButton.vue";
+import Input from "@/components/common/BaseInput.vue";
+import SubmitButton from "@/components/common/BaseSolidButton.vue";
 // import router from "@/router";
 import { ref } from "vue";
 

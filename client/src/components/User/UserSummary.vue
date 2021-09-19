@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import SolidButton from "@/components/common/SolidButton.vue";
+import SolidButton from "@/components/common/BaseSolidButton.vue";
 
 export default {
   name: "UserSummary",

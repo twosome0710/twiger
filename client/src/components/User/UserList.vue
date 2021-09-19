@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import UserSummary from "@/components/connect/UserSummary.vue";
+import UserSummary from "./UserSummary.vue";
 
 export default {
   name: "UserList",
