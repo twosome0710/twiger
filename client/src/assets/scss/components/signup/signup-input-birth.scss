@@ -1,0 +1,186 @@
+@charset 'utf-8';
+
+.birth_box {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+    .year {
+        display: table-cell;
+
+        .label_year {
+            display: block;
+            position: relative;
+            border: 1px solid #cfd9de;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &.selected {
+                border-color: #1da1f2;
+                box-shadow: #1da1f2 0 0 0 1px;
+
+                .text_wrap {
+                    color: #1da1f2;
+                }
+
+                &.error {
+                    border-color: #e0245e;
+                    box-shadow: #e0245e 0 0 0 1px;
+                }
+            }
+
+            &.error {
+                border-color: #e0245e;
+
+                .text_wrap {
+                    color: #e0245e;
+                }
+            }
+
+            .text_wrap {
+                position: absolute;
+                padding: 8px 8px 0;
+                color: #536471;
+                font-size: 1.3rem;
+                line-height: 1.6rem;
+            }
+
+            .input_wrap {
+                margin-top: 16px;
+                padding: 12px 8px 8px;
+
+                .input_year {
+                    display: block;
+                    width: 100%;
+                    border: 0;
+                    background-color: transparent;
+                    box-sizing: border-box;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .month {
+        display: table-cell;
+        padding-left: 12px;
+
+        .label_month {
+            display: block;
+            position: relative;
+            border: 1px solid #cfd9de;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &.selected {
+                border-color: #1da1f2;
+                box-shadow: #1da1f2 0 0 0 1px;
+
+                .text_wrap {
+                    color: #1da1f2;
+                }
+
+                &.error {
+                    border-color: #e0245e;
+                    box-shadow: #e0245e 0 0 0 1px;
+                }
+            }
+
+            &.error {
+                border-color: #e0245e;
+
+                .text_wrap {
+                    color: #e0245e;
+                }
+            }
+
+            .text_wrap {
+                position: absolute;
+                padding: 8px 8px 0;
+                color: #536471;
+                font-size: 1.3rem;
+                line-height: 1.6rem;
+            }
+
+            .input_wrap {
+                margin-top: 16px;
+                padding: 12px 8px 8px;
+
+                .input_month {
+                    display: block;
+                    width: 100%;
+                    border: 0;
+                    background-color: transparent;
+                    box-sizing: border-box;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .day {
+        display: table-cell;
+        padding-left: 12px;
+
+        .label_day {
+            display: block;
+            position: relative;
+            border: 1px solid #cfd9de;
+            border-radius: 4px;
+            cursor: pointer;
+
+            &.selected {
+                border-color: #1da1f2;
+                box-shadow: #1da1f2 0 0 0 1px;
+
+                .text_wrap {
+                    color: #1da1f2;
+                }
+
+                &.error {
+                    border-color: #e0245e;
+                    box-shadow: #e0245e 0 0 0 1px;
+                }
+            }
+
+            &.error {
+                border-color: #e0245e;
+
+                .text_wrap {
+                    color: #e0245e;
+                }
+            }
+
+            .text_wrap {
+                position: absolute;
+                padding: 8px 8px 0;
+                color: #536471;
+                font-size: 1.3rem;
+                line-height: 1.6rem;
+            }
+
+            .input_wrap {
+                margin-top: 16px;
+                padding: 12px 8px 8px;
+
+                .input_day {
+                    display: block;
+                    width: 100%;
+                    border: 0;
+                    background-color: transparent;
+                    box-sizing: border-box;
+
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+}
