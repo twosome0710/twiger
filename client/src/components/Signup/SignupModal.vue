@@ -59,11 +59,12 @@
           <SubmitButton
             type="submit"
             class="btn_submit"
-            label="가입하기"
             :disabled="!isFormCompleted"
             :clickHandler="submitHandler"
             :loading="loading"
-          />
+          >
+            가입하기
+          </SubmitButton>
         </div>
       </form>
     </div>

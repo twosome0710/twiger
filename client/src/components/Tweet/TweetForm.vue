@@ -33,9 +33,10 @@
         <div class="btn_area">
           <SubmitButton
             class="submit_btn"
-            label="트윗하기"
             :disabled="!(0 < tweet.length && tweet.length <= 280)"
-          />
+          >
+            트윗하기
+          </SubmitButton>
         </div>
       </div>
     </div>

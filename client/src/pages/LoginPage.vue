@@ -24,11 +24,12 @@
         <SubmitButton
           type="submit"
           class="submit_btn"
-          label="로그인"
           :disabled="email.length === 0 || password.length === 0 || loading"
           :clickHandler="submitHandler"
           :loading="loading"
-        />
+        >
+          로그인
+        </SubmitButton>
       </div>
     </form>
     <div class="link_area">

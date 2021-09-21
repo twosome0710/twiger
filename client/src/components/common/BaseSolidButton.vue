@@ -6,7 +6,7 @@
     :disabled="disabled || loading"
     @click="clickHandler"
   >
-    {{ label }}
+    <slot></slot>
   </button>
 </template>
 
@@ -18,7 +18,6 @@ export default {
       type: String,
       default: "button",
     },
-    label: String,
     disabled: Boolean,
     loading: Boolean,
     clickHandler: Function,

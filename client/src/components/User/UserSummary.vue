@@ -18,7 +18,7 @@
             <div class="user_id">@{{ user.userId }}</div>
           </div>
           <div class="btn_area">
-            <SolidButton label="팔로우" class="btn_follow" />
+            <SolidButton class="btn_follow">팔로우</SolidButton>
           </div>
         </div>
         <p class="introduction" v-show="fluent">{{ user.introduction }}</p>

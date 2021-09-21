@@ -48,7 +48,7 @@
           </router-link>
         </div>
       </nav>
-      <TweetButton type="button" label="트윗하기" class="btn_tweet" />
+      <TweetButton type="button" class="btn_tweet">트윗하기</TweetButton>
       <div class="account_area">
         <button type="button" class="btn_account">
           <div class="profile_area">
