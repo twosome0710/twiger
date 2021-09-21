@@ -3,7 +3,7 @@ module.exports = {
     loaderOptions: {
       sass: {
         additionalData: `
-          @import "@/assets/styles/_mixins.scss";
+          @import "@/assets/scss/base.scss";
         `,
       },
     },
