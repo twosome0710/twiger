@@ -204,81 +204,8 @@ export default {
 };
 </script>
 
-<style>
-@charset "utf-8";
-
-.signup_modal_overlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.signup_modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.signup_modal .signup_form {
-  overflow: hidden;
-  width: 600px;
-  padding: 0 32px 36px;
-  border-radius: 16px;
-  background-color: #fff;
-}
-
-.signup_modal .signup_form .logo_area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 45px;
-}
-
-.signup_modal .signup_form .input_area .signup_guide_text {
-  display: block;
-  font-size: 2.3rem;
-  line-height: 2.8rem;
-  margin-top: 16px;
-}
-
-.signup_modal .signup_form .input_area .input_name {
-  margin-top: 28px;
-}
-
-.signup_modal .signup_form .input_area .input_email {
-  margin-top: 28px;
-}
-
-.signup_modal .signup_form .input_area .input_password {
-  margin-top: 28px;
-}
-
-.signup_modal .signup_form .input_area .birth_wrap {
-  margin-top: 32px;
-}
-
-.signup_modal .signup_form .input_area .birth_wrap .birth_label {
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 2rem;
-}
-
-.signup_modal .signup_form .input_area .birth_wrap .info {
-  color: #536471;
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 2rem;
-}
-
-.signup_modal .signup_form .input_area .birth_wrap .input_birth {
-  margin-top: 16px;
-}
-
-.signup_modal .signup_form .btn_submit {
-  margin-top: 100px;
-}
-</style>
+<style
+  src="@/assets/scss/components/signup/signup-modal.scss"
+  lang="scss"
+  scoped
+></style>

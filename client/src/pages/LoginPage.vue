@@ -107,46 +107,4 @@ export default {
 };
 </script>
 
-<style>
-@charset "utf-8";
-
-.login_section {
-  max-width: 368px;
-  margin: 0 auto;
-  padding: 20px 0;
-}
-
-.login_section .title {
-  margin-top: 32px;
-  font-size: 3.1rem;
-  font-weight: 700;
-}
-
-.login_section .login_form .email_input {
-  margin-top: 24px;
-}
-
-.login_section .login_form .password_input {
-  margin-top: 24px;
-}
-
-.login_section .login_form .submit_btn {
-  height: 46px;
-  margin-top: 24px;
-  border-radius: 23px;
-}
-
-.login_section .link_area {
-  margin-top: 32px;
-  text-align: center;
-}
-
-.login_section .signup_link {
-  color: #1b95e0;
-}
-
-.login_section .signup_link:focus {
-  outline: none;
-  text-decoration: underline;
-}
-</style>
+<style src="@/assets/scss/pages/login.scss" lang="scss" scoped></style>
